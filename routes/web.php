@@ -15,20 +15,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// 最初に来たらlogoutに飛ばしてリダイレクトでログイン画面に
 Route::get('/', [OutfitController::class, 'logout']);
 
+// /loginと来たらlogoutに飛ばしてリダイレクトでログイン画面に
 Route::get('/login', [OutfitController::class, 'logout']);
 
+// ここはBreezeのルート
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// ここからはoutfitのルート(カスタムルート)
 Route::controller(OutfitController::class)->middleware(['auth'])->group(function(){
+    // コーデを組む
     Route::post('/outfits', 'store')->name('store');
-    Route::get('/create', 'create')->name('create');
+    // 服の追加
+    Route::get('/upload', 'upload')->name('upload');
+    // home画面
     Route::get('/home', 'home')->name('home');
+    
+    Route::post('/add', 'add')->name('add');
+    
 });
 
 require __DIR__.'/auth.php';

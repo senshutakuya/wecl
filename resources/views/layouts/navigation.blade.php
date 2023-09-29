@@ -13,8 +13,8 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('home') }}
+                    <x-nav-link :href="route('upload')" :active="request()->routeIs('upload')">
+                        {{ __('upload') }}
                     </x-nav-link>
                 </div>
             </div>

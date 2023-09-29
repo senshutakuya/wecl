@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clothings', function (Blueprint $table) {
+        Schema::create('sizes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 50);
-            $table->string('discription', 500);
-            $table->string('image_path', 100);
-            $table->foreignId('category_id')->constrained(); 
-            
+            $table->string('size', 10);
+            // $table->enum('size', ['S', 'M', 'L', 'オーバーサイズ']);
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clothings');
+        Schema::dropIfExists('sizes');
     }
 };

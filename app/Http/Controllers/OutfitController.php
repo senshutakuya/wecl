@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Outfit;
 use App\Models\User;
+use App\Models\Category;
+use App\Models\Gender;
+use App\Models\Season;
+use App\Models\Style;
+use App\Models\Part;
+use App\Models\Length;
+use App\Models\Size;
+use App\Models\Color;
+use App\Models\Impression;
 
 /**
  * Post一覧を表示する
@@ -25,13 +34,6 @@ class OutfitController extends Controller{
     }
     
     
-    public function index()
-    {
-
-        return view('outfits.login');
-        // outfitsフォルダのindex.blade.phpを表示
-       //blade内で使う変数'outfits'と設定。'outfits'の中身にgetを使い、インスタンス化した$outfitを代入。
-    }
     
     public function home(Outfit $outfit)
     {
@@ -40,40 +42,6 @@ class OutfitController extends Controller{
        //blade内で使う変数'outfits'と設定。'outfits'の中身にgetを使い、インスタンス化した$outfitを代入。
     }
     
-
-    public function login(Request $request)
-    // フォームから送信されたデータの取得の為にrequestを使う
-    {
-        $email = $request->input('email');
-        $password = $request->input('password');
-        // ユーザーのフォームで入力した内容を変数に格納
-        
-        // dd($email, $password);
-        
-        
-        // ユーザーをデータベースから取得
-         $user = User::where('email', $email)->first();
-        // where メソッドは、指定された条件に一致するレコードを取得する
-        // ->first(): where 条件に一致する最初のレコードを取得、もし一致するレコードが見つからない場合、null が返されます。
-        
-         if ($email === $user->email && $password === $user->password) {
-            
-            // セッションの再生成
-            $request->session()->regenerate();
-            
-            // dd("");
-            
-            return redirect()->intended('/home'); // ログイン後のリダイレクト先を指定
-
-        }
-        else{
-            
-
-            
-            return view('outfits.login'); // ログイン失敗後の画面表示
-            // 認証失敗時の処理
-        }
-    }
     
     public function logout(Request $request)
     {
@@ -84,5 +52,208 @@ class OutfitController extends Controller{
         // ログアウト後のリダイレクト
         return view('auth.login');
     }
+    
+    // 服の追加
+    public function upload(Category $category, Gender $gender, Season $season, Style $style, Part $part, Length $length, Size $size, Impression $impression, Color $color)
+    {
+        // Genderモデルをインスタンス化
+        // $genderModel = new Gender;
+        // $genders = $genderModel->GenderValues();
+        
+        // // Seasonモデルをインスタンス化
+        // $seasonModel = new Season;
+        // $seasons = $seasonModel->SeasonValues();
+        
+        
+        // // styleモデルをインスタンス化
+        // $styleModel = new Style;
+    
+        // // すべてのstyleーを結合して配列にする
+        // $styles = array_merge(
+        //     $styleModel->man_styleValues(),
+        //     $styleModel->woman_styleValues(),
+        //     $styleModel->gender_styleValues(),
+        // );
+        
+        
+        // // partモデルをインスタンス化
+        // $partModel = new Part;
+        // $parts = $partModel->partValues();
+    
+    
+        // // lengthモデルをインスタンス化
+        // $lengthModel = new Length;
+        // $lengths = $lengthModel->lengthValues();
+        
+        // // sizeモデルをインスタンス化
+        // $sizeModel = new Size;
+        // $sizes = $sizeModel->sizeValues();
+        
+        // // カテゴリーモデルをインスタンス化
+        // $categoryModel = new Category;
+    
+        // // すべてのカテゴリーを結合して配列にする
+        // $categories = array_merge(
+        //     $categoryModel->getTopsValues(),
+        //     $categoryModel->getBotmsValues(),
+        //     $categoryModel->getDoresValues(),
+        //     $categoryModel->getOuterwareValues(),
+        //     $categoryModel->getInnerwareValues(),
+        //     $categoryModel->getAccessoryValues(),
+        //     $categoryModel->getShoesValues(),
+        //     $categoryModel->getOverlapValues()
+        // );
+        
+        // colorモデルをインスタンス化
+        // $colorModel = new Color;
+        
+        // 
+  
+    
+        // // すべてのカテゴリーを結合して配列にする
+        // $colors = array_merge(
+        //     $colorModel->One_colorValues(),
+        //     $colorModel->Two_colorValues(),
+        // );
+        
+        // tops
+        
+        // $topsCategories = $category->get()->where('ca_variable_value', 'tops');
+
+        // $topsValues = $topsCategories->pluck('ca_tops_value')->toArray();
+        
+        // // tops
+        
+        // $topsCategories = $category->get()->where('ca_variable_value', 'botms');
+
+        // $topsValues = $topsCategories->pluck('ca_tops_value')->toArray();
+        
+        // dd($topsValues);
+
+
+    
+        return view('outfits.upload')->with([
+            'categories' => $category->get(),
+            'genders' => $gender->get(),
+            'seasons' => $season->get(),
+            'styles' => $style->get(),
+            'parts' => $part->get(),
+            'lengths' => $length->get(),
+            'sizes' => $size->get(),
+            'impressions' => $impression->get(),
+            'colors' => $color->get(),
+            
+        ]);
+    }
+    
+    public function add(Request $request){
+        $requestData = $request->all();
+
+        // 取得したデータを表示
+        // dd($requestData);
+        // 前面の元のファイル名を取得
+        $front_originalNameCamera = $request->file('front_upfile_camera')->getClientOriginalName();
+        // dd($front_originalNameCamera);
+        // 後面の元のファイル名を取得
+        $back_originalNameCamera = $request->file('back_upfile_camera')->getClientOriginalName();
+        // dd($back_originalNameCamera);
+        // Outfitモデルをインスタンス化
+        $outfit = new Outfit();
+    
+        // ここで画像の保存などの処理を行います
+        // ファイル名の生成やファイルの移動などを行います
+    
+        // 例：ファイル名の生成
+        $front_name = date('Ymd_His').'_front_'.$front_originalNameCamera;
+        $back_name = date('Ymd_His').'_back_'.$back_originalNameCamera;
+    
+        // ファイルの保存
+        $request->file('front_upfile_camera')->move('storage/images', $front_name);
+        $request->file('back_upfile_camera')->move('storage/images', $back_name);
+    
+        // その他のデータベースへの保存処理を行います
+        
+        // $gender_id
+        
+        // $gender_id = request()->input('gender');
+        $genderData = json_decode($request->input('post.gender_id'));
+        $genderId = $genderData->id;
+        // dd($genderId);
+        
+        
+        
+        // $season_id
+
+        $seasonData = json_decode($request->input('post.season_id'));
+        $seasonId = $seasonData->id;
+        // dd($seasonId);
+        
+        
+        // $style_id
+
+        $styleData = json_decode($request->input('post.style_id'));
+        $styleId = $styleData->id;
+        // dd($seasonId);
+        
+        // part_id
+        $partData = json_decode($request->input('post.part_id'));
+        $partId = $partData->id;
+        // dd($partId);
+        
+        // length_id
+        $lengthData = json_decode($request->input('post.length_id'));
+        $lengthId = $lengthData->id;
+        // dd($lengthId);
+        // size_id
+        $sizeData = json_decode($request->input('post.size_id'));
+        $sizeId = $sizeData->id;
+        // dd($sizeId);
+        // category_id
+        $categoryData = json_decode($request->input('post.category_id'));
+        $categoryId = $categoryData->id;
+        // dd($categoryId);
+        // impression_id
+        // impression_id
+        $impressionData = json_decode($request->input('post.impression_id'));
+
+        // dd($impressionId);
+        $impressionId = $impressionData->id;
+        // dd($impressionId);
+        
+        // color_id
+        $colorData = json_decode($request->input('post.color_id'));
+        $colorId = $colorData->id;
+        
+        // dd($front_name,$back_name);
+
+            
+        $outfit->front_image_path = $front_name;
+        $outfit->back_image_path = $back_name;
+        $outfit->gender_id = $genderId;
+        $outfit->season_id = $seasonId;
+        $outfit->style_id = $styleId;
+        $outfit->part_id = $partId;
+        $outfit->length_id = $lengthId;
+        $outfit->size_id = $sizeId;
+        $outfit->category_id = $categoryId;
+        $outfit->impression_id = $impressionId;
+        $outfit->color_id = $colorId;
+            
+        // データベースに保存
+        $outfit->save();
+        // 画像をアップするページに戻る
+        return back()->with('message', '画像を保存しました');
+    }
+
+
 }
 
+// $table->unsignedBigInteger('gender_id')->nullable();
+//             $table->unsignedBigInteger('season_id')->nullable();
+//             $table->unsignedBigInteger('style_id')->nullable();
+//             $table->unsignedBigInteger('part_id')->nullable();
+//             $table->unsignedBigInteger('length_id')->nullable();
+//             $table->unsignedBigInteger('size_id')->nullable();
+//             $table->unsignedBigInteger('category_id')->nullable();
+//             $table->unsignedBigInteger('impression_id')->nullable();
+//             $table->unsignedBigInteger('color_id')->nullable();
