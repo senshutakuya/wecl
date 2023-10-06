@@ -14,12 +14,7 @@ class Style extends Model
     protected $fillable = [
         // 許可するカラムを指定
         'id',
-        'st_variable_id',
-        'st_variable_value',
-        'st_id',
-        'st_man_value',
-        'st_woman_value',
-        'st_gender_value',
+        'style',
 
     ];
     

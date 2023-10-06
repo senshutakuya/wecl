@@ -76,9 +76,7 @@
                     <h2>系統</h2>
                     <select name="post[style_id]">
                         @foreach ($styles as $style)
-                            <option value="{{ $style }}">{{ $style->st_man_value }}</option>
-                            <option value="{{ $style }}">{{ $style->st_woman_value }}</option>
-                            <option value="{{ $style }}">{{ $style->st_gender_value }}</option>
+                            <option value="{{ $style }}">{{ $style->style }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -115,6 +113,7 @@
                 <br>
                 
                 
+                
                 <!--服の大きさ-->
                 
                 <!-- outfits/upload.blade.php -->
@@ -133,19 +132,31 @@
                 
                 <!-- outfits/upload.blade.php -->
 
-                <div class="category">
-                    <h2>カテゴリー</h2>
+               <div class="category">
+                    <h2>服のカテゴリ</h2>
                     <select name="post[category_id]">
-                        @foreach ($categories as $category)
-                            <option value="{{ $category }}">{{ $category->ca_tops_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_botms_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_dores_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_outerware_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_innerware_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_accessory_value_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_shoes_value }}</option>
-                            <option value="{{ $category }}">{{ $category->ca_overlap_value }}</option>
+                        @foreach ($tops as $as_tops)
+                            <option value="{{ $as_tops }}">{{ $as_tops->tops }}</option>
                         @endforeach
+                        @foreach ($botms as $as_botms)
+                            <option value="{{ $as_botms }}">{{ $as_botms->botms }}</option>
+                        @endforeach
+                        @foreach ($dores as $as_dores)
+                            <option value="{{ $as_dores }}">{{ $as_dores->dores }}</option>
+                        @endforeach
+                        @foreach ($outerwares as $as_outerware)
+                            <option value="{{ $as_outerware }}">{{ $as_outerware->outerware }}</option>
+                        @endforeach
+                        @foreach ($accessories as $as_accessory)
+                            <option value="{{ $as_accessory }}">{{ $as_accessory->accessory }}</option>
+                        @endforeach
+                        @foreach ($shoes as $as_shoes)
+                            <option value="{{ $as_shoes }}">{{ $as_shoes->shoes }}</option>
+                        @endforeach
+                        @foreach ($overlaps as $as_overlap)
+                            <option value="{{ $as_overlap }}">{{ $as_overlap->overlap }}</option>
+                        @endforeach
+                        
                     </select>
                 </div>
                 <br>

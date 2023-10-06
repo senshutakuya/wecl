@@ -16,6 +16,12 @@
                     <x-nav-link :href="route('upload')" :active="request()->routeIs('upload')">
                         {{ __('upload') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('list')" :active="request()->routeIs('list')">
+                        {{ __('list') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('coordinate')" :active="request()->routeIs('coordinate')">
+                        {{ __('coordinate') }}
+                    </x-nav-link>
                 </div>
             </div>
 

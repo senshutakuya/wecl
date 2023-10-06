@@ -12,7 +12,7 @@ class Authenticate extends Middleware
     {
         if (!Auth::check()) {
             // ログインしていない場合、ログインページにリダイレクト
-            return redirect('/login');
+            return redirect('/register');
         }
 
         return $next($request);

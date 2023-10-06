@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateOverlapsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('styles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('style', 20)->nullable();
+        Schema::create('overlaps', function (Blueprint $table) {
+            $table->id();
+            $table->string('overlap', 20);
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('styles');
+        Schema::dropIfExists('overlaps');
     }
-};
+}

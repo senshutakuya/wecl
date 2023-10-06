@@ -39,14 +39,24 @@ class Outfit extends Model
         'impression_id',
         // 色
         'color_id',
+        // トップス
+        'tops_id',
+        // ボトムス
+        'botms_id',
+        // ドレス
+        'dores_id',
+        // アウターウェア
+        'outerware_id',
+        // アクセサリー
+        'accessory_id',
+        // 靴
+        'shoes_id',
+        // 被り物
+        'overlap_id',
     ];
     
-    public $timestamps = false;
+    public $timestamps = true;
     
-    // categoryモデルとのリレーションを定義
-    public function category()
-    {
-        return $this->belongsTo(Category::class, 'category_id');
-        
-    }
+    // リレーション
+
 }

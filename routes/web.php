@@ -39,6 +39,14 @@ Route::controller(OutfitController::class)->middleware(['auth'])->group(function
     
     Route::post('/add', 'add')->name('add');
     
+    Route::get('/list', 'cloth_list')->name('list');
+    
+    Route::get('/list/tops', 'tops_list')->name('topslist');
+    
+    Route::get('/coordinate', 'coordinate')->name('coordinate');
+    
+    
+    
 });
 
 require __DIR__.'/auth.php';
