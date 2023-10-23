@@ -5,7 +5,6 @@
     <title>服一覧</title>
     <!-- Tailwind CSSを追加 -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet" />
 </head>
 <body>
     <x-app-layout>
@@ -26,7 +25,6 @@
                 <img src="https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E6%9C%8D%E4%B8%80%E8%A6%A7%E7%94%BB%E9%9D%A2/icons8-t%E3%82%B7%E3%83%A3%E3%83%84-50.png" alt="トップス">
             </a>
             
-
             
             <!-- ボトムス -->
             <a href="/list/botms" class="block text-center hover:underline">
@@ -40,11 +38,8 @@
                 <img src="https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E6%9C%8D%E4%B8%80%E8%A6%A7%E7%94%BB%E9%9D%A2/icons8-%E3%82%B8%E3%83%A3%E3%82%B1%E3%83%83%E3%83%88-50.png" alt="トップス">
             </a>
             
-            <form action ="/coordinate_gen">
-                <h2>地名を入力</h2>
-                <input type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" />
-                <button type="submit">位置情報を取得</button>
-            </form>
+            <button onclick="getLocation()">位置情報を取得</button>
+            
         
         </div>
     </x-app-layout>

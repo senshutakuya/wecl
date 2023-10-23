@@ -21,7 +21,7 @@
         </div>
         <div id="openweathermap-widget-11"></div>
     <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '1850144',appid: '54000d99cbc9d1a4d126abc2b3f7c5a7',units: 'metric',containerid: 'openweathermap-widget-11',  });  
+    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '1850144',appid: '54000d99cbc9d1a4d126abc2b3f7c5a7',lang: 'ja' ,units: 'metric',containerid: 'openweathermap-widget-11',  });  
     (function() {var script = document.createElement('script');
     script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
     var s = document.getElementsByTagName('script')[0];
