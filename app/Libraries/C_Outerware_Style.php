@@ -2,16 +2,16 @@
 
 namespace App\Libraries;
 
-use App\Models\Tops;
+use App\Models\Botms;
 use App\Models\Part;
 use App\Models\Color;
 use App\Models\Outfit;
-use APP\Libraries\C_Tops;
+use APP\Libraries\C_Botms;
 use Cloudinary;
 
-class C_Botms_Style {
+class C_Outerware_Style {
     private $outfit;
-    private $c_tops;
+    private $c_Botms;
     private $natural;
     private $street;
     private $old_clothes;
@@ -27,20 +27,20 @@ class C_Botms_Style {
 
     public function __construct() {
         $this->outfit = new Outfit();
-        $this->c_tops = new C_Tops();
+        $this->c_Botms = new C_Botms();
         // 各色のボトムスを取得
         
-        $this->natural = $this->getBottomsByStyle(1); 
-        $this->street = $this->getBottomsByStyle(2); 
-        $this->old_clothes = $this->getBottomsByStyle(3);
-        $this->sports = $this->getBottomsByStyle(4);
-        $this->rock = $this->getBottomsByStyle(5);
-        $this->casual = $this->getBottomsByStyle(6);
-        $this->cute = $this->getBottomsByStyle(7);
-        $this->formal = $this->getBottomsByStyle(8);
-        $this->mode = $this->getBottomsByStyle(9);
-        $this->boyish = $this->getBottomsByStyle(10);
-        $this->drat = $this->getBottomsByStyle(11);
+        $this->natural = $this->getOuterwareByStyle(1); 
+        $this->street = $this->getOuterwareByStyle(2); 
+        $this->old_clothes = $this->getOuterwareByStyle(3);
+        $this->sports = $this->getOuterwareByStyle(4);
+        $this->rock = $this->getOuterwareByStyle(5);
+        $this->casual = $this->getOuterwareByStyle(6);
+        $this->cute = $this->getOuterwareByStyle(7);
+        $this->formal = $this->getOuterwareByStyle(8);
+        $this->mode = $this->getOuterwareByStyle(9);
+        $this->boyish = $this->getOuterwareByStyle(10);
+        $this->drat = $this->getOuterwareByStyle(11);
         
         
         // 他のプロパティの初期化
@@ -51,7 +51,7 @@ class C_Botms_Style {
     }
     
     // ここで引数に入れられたスタイルIDが該当するボトムスを取得する処理を書く
-    private function getBottomsByStyle($styleId) {
+    private function getOuterwareByStyle($styleId) {
         return $this->outfit->where('part_id', 2)->where('style_id', $styleId)->get();
     }
     
@@ -68,16 +68,17 @@ class C_Botms_Style {
     }
     
     // styleを選ぶベースの関数
-    private function baseStyleMatch($selectedTopsStyle, $confirmationTopsStyle, $propertyName) {
+    private function baseStyleMatch($selectedBotmsStyle, $confirmationBotmsStyle, $propertyName) {
         $cStyle = null;
         $alertDifferent = "";
         
         
     
-        if ($selectedTopsStyle === $confirmationTopsStyle) {
+        if ($selectedBotmsStyle === $confirmationBotmsStyle) {
             if ($propertyName->isNotEmpty()) {
                 $cStyle = $proertyName;
                 $random_item = $this->getRandomStyleIndex($propertyName);
+                // return [$random_item , $cStyle];
             } elseif ($this->natural->isNotEmpty()) {
                 $cStyle = $this->natural;
                 $random_item = $this->getRandomStyleIndex($this->natural);
@@ -86,14 +87,13 @@ class C_Botms_Style {
                 $random_item = $this->getRandomStyleIndex($this->casual);
             } elseif ($this->casual->isEmpty()) {
                 for ($i = 1; $i <= 10; $i++) {
-                    $cStyle = $this->getBottomsByStyle($i);
+                    $cStyle = $this->getOuterwareByStyle($i);
                     if ($cStyle->isNotEmpty()) {
                         $alertDifferent = "この系統はあいません";
-                        $random_item = $this->getRandomStyleIndex($cStyle);
                         break;
                     }
                     
-                    if($i > 10){
+                    if($i >=10){
                         break;
                     }
                 }
@@ -103,15 +103,14 @@ class C_Botms_Style {
             }
         }
     
-        // $randomItem = $this->getRandomStyleIndex($cStyle);
-        // dd($random_item);
+        // $random_item = $this->getRandomStyleIndex($cStyle);
         
-        $bStyleResult = $cStyle[$random_item];
-        // dd($bStyleResult);
+        $oStyleResult = $cStyle[$random_item];
     
-        return [$bStyleResult, $alertDifferent];
+        return [$oStyleResult, $alertDifferent];
     }
     
+   
     
     // 実際にトップスのカラーを取得する処理
     public function getSelectedStyle($getstyle){

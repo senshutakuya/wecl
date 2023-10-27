@@ -47,6 +47,8 @@ Route::controller(OutfitController::class)->middleware(['auth'])->group(function
     
     Route::get('/coordinate_gen', 'coordinate_gen')->name('coordinate_gen');
     
+    Route::post('/cordinate_save', 'cordinate_save')->name('cordinate_save');
+    
     
     
 });

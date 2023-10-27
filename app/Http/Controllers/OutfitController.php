@@ -28,7 +28,7 @@ use App\Libraries\C_Tops;
 use App\Libraries\C_Botms; 
 use App\Libraries\C_Botms_Color;
 use App\Libraries\C_Botms_style;
-use App\Libraries\Get_Tops; 
+use App\Libraries\C_Outerware;
 
 /**
  * Post一覧を表示する
@@ -268,7 +268,7 @@ class OutfitController extends Controller{
     
     
     
-    public function coordinate_gen(Outfit $outfit , Request $request , C_Tops $c_tops ,C_Botms $c_botms , C_Botms_Color $c_botms_color){
+    public function coordinate_gen(Outfit $outfit , Request $request , C_Tops $c_tops ,C_Botms $c_botms , C_Botms_Color $c_botms_color ,C_Outerware $c_outerware){
         // 前画像の表示処理
         // $front_image_path = json_decode($outfit->get('front_image_path'), true);
         
@@ -289,6 +289,7 @@ class OutfitController extends Controller{
         
         $c_tops = new C_Tops();
         $c_botms = new C_Botms();
+        $c_outerware = new C_Outerware();
         // $test = $c_tops->degrees_over_20();
         // dd($c_tops);
 
@@ -322,7 +323,9 @@ class OutfitController extends Controller{
         
         // dd($weather_info,$minTemperature);
         
-        
+        $tops_data = null;
+        $botms_data = null;
+        $outerware_data = null;
         
 
 
@@ -333,26 +336,35 @@ class OutfitController extends Controller{
         switch($weather_info){
             case '晴天':
                 // outfitsテーブルのdiscriptionに日焼けしないようにしましょうとかく
-                //     最低気温が20度以上なら
+                    // 最低気温が20度以上なら
                 if($minTemperature >= 2000){
                     // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
+                    $tops_data = $c_tops->degrees_over_20();
+                    
+                    // dd($test);
                     // 		トップスの条件式
                     // もしトップスが選ばれたら                
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        $botms_test = $c_botms_color->combination_with_tops();
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                    }
+                    else{
+                        return $alert = "服が無い";
                     }
                 }
                     
                 // 	最低気温が16度以上なら
                 elseif($minTemperature >= 1600 && $minTemperature <= 1999){
                     // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
+                    $tops_data = $c_tops->degrees_over_16();
                     
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        dd($test[0][14]);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                        // dd($botms_test);
+                    }
+                    else{
+                        return $alert = "服が無い";
                     }
                 }
                     
@@ -360,14 +372,27 @@ class OutfitController extends Controller{
                 
                 // 最低気温が15度以下なら	
                 elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
+                    $tops_data = $c_tops->degrees_under_15();
                     
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        dd($test[0][14]);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                        // dd($botms_test);
+                        // 		アウターをつける
+                        if(!is_null($botms_data)){
+                            // 		アウターの条件式
+                            $outerware_data = $c_outerware->combination_with_botms($botms_data);
+                            // dd($tops_data,$botms_data,$outerware_data);
+                            
+                        }
+                        else{
+                            break;
+                        }
                     }
-                    // 		アウターをつける
-                    // 		アウターの条件式
+                    else{
+                        return $alert = "服が無い";
+                    }
+                    
                 }
 
 
@@ -375,267 +400,144 @@ class OutfitController extends Controller{
                 break;
             case '雨':
                 
+                // outfitsテーブルのdiscriptionに日焼けしないようにしましょうとかく
+                //     最低気温が20度以上なら
                 if($minTemperature >= 2000){
                     // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
-                    // 		トップスの条件式
-                    if(!is_null($test)){
-                        // switch()
-                        dd($test[0][14]);
-                    }
-                }
-                    
-                // 	最低気温が16度以上なら
-                elseif($minTemperature >= 1600 && $minTemperature <= 1999){
-                    // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        dd($test[0][14]);
-                    }
-                }
-                    
-                
-                
-                // 最低気温が15度以下なら	
-                elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        dd($test[0][14]);
-                    }
-                    
-                    // 		アウターをつける
-                    // 		アウターの条件式
-                }
-                // outfitsテーブルのdiscriptionに傘を持っていきましょうとかく
-                break;
-                
-            case '小雨':
-                
-                if($minTemperature >= 2000){
-                    // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
-                    // 		トップスの条件式
-                    if(!is_null($test)){
-                        // switch()
-                        dd($test[0][14]);
-                    }
-                }
-                    
-                // 	最低気温が16度以上なら
-                elseif($minTemperature >= 1600 && $minTemperature <= 1999){
-                    // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        dd($test[0][14]);
-                    }
-                }
-                    
-                
-                
-                // 最低気温が15度以下なら	
-                elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        dd($test[0][14]);
-                    }
-                    
-                    // 		アウターをつける
-                    // 		アウターの条件式
-                }
-                // outfitsテーブルのdiscriptionに傘を持っていきましょうとかく
-                break;
-                
-            case '曇りがち':
-                
-                if($minTemperature >= 2000){
-                    // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
+                    $tops_data = $c_tops->degrees_over_20();
                     
                     // dd($test);
                     // 		トップスの条件式
-                    if(!is_null($test)){
-                        
-                        $test_botms = $c_botms->combination_with_tops($test);
-                        dd($test_botms);
+                    // もしトップスが選ばれたら                
+                    if(!is_null($tops_data)){
                         // switch()
-                        // dd($test[0][14]);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                    }
+                    else{
+                        return $alert = "服が無い";
                     }
                 }
                     
                 // 	最低気温が16度以上なら
                 elseif($minTemperature >= 1600 && $minTemperature <= 1999){
                     // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
+                    $tops_data = $c_tops->degrees_over_16();
                     
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        // dd($test[0][14]);
-                        $botms_test = $c_botms->combination_with_tops($test);
-                        dd($botms_test);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                        // dd($botms_test);
                     }
-                    
+                    else{
+                        return $alert = "服が無い";
+                    }
                 }
                     
                 
                 
                 // 最低気温が15度以下なら	
                 elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
+                    $tops_data = $c_tops->degrees_under_15();
                     
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        dd($test[0][14]);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                        // dd($botms_test);
+                        // 		アウターをつける
+                        if(!is_null($botms_data)){
+                            // 		アウターの条件式
+                            $outerware_data = $c_outerware->combination_with_botms($botms_data);
+                            // dd($botms_data,$outerware_data);
+                        }
+                        else{
+                            break;
+                        }
+                        
                     }
-                    // 		アウターをつける
-                    // 		アウターの条件式
+                    else{
+                        return $alert = "服が無い";
+                    }
+                    
                 }
-                // outfitsテーブルのdiscriptionに今日は曇りですとかく
+
+
+                
                 break;
-                
-                
-            case '厚い雲' :
+            // それ以外
+            default:
                 // outfitsテーブルのdiscriptionに日焼けしないようにしましょうとかく
-                //     最低気温が20度以上なら
+                    // 最低気温が20度以上なら
                 if($minTemperature >= 2000){
                     // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
+                    $tops_data = $c_tops->degrees_over_20();
+                    
+                    // dd($test);
                     // 		トップスの条件式
-                    if(!is_null($test)){
+                    // もしトップスが選ばれたら                
+                    if(!is_null($tops_data)){
                         // switch()
-                        $botms_test = $c_botms->combination_with_tops($test);
-                        dd($botms_test);
-                    }
-                }
-                    
-                // 	最低気温が16度以上なら
-                elseif($minTemperature >= 1600 && $minTemperature <= 1999){
-                    // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        // dd($test[0][14]);
-                        $botms_test = $c_botms->combination_with_tops($test);
-                    }
-                }
-                    
-                
-                
-                // 最低気温が15度以下なら	
-                elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        $botms_test = $c_botms->combination_with_tops($test);
-                    }
-                    // 		アウターをつける
-                    // 		アウターの条件式
-                }
-                
-            
-            case '薄い雲' :
-                // outfitsテーブルのdiscriptionに日焼けしないようにしましょうとかく
-                //     最低気温が20度以上なら
-                if($minTemperature >= 2000){
-                    // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
-                    // 		トップスの条件式
-                    if(!is_null($test)){
-                        // switch()
-                        $botms_test = $c_botms->combination_with_tops($test);
-                    }
-                    
-                }
-                    
-                // 	最低気温が16度以上なら
-                elseif($minTemperature >= 1600 && $minTemperature <= 1999){
-                    // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        $botms_test = $c_botms->combination_with_tops($test);
-                    }
-                    
-                }
-                    
-                
-                
-                // 最低気温が15度以下なら	
-                elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
-                    
-                    if(!is_null($test)){
-                        // switch()
-                        $botms_test = $c_botms->combination_with_tops($test);
-                    }
-                    
-                    // 		アウターをつける
-                    // 		アウターの条件式
-                }
-                
-            case '雲' :
-                // outfitsテーブルのdiscriptionに日焼けしないようにしましょうとかく
-                //     最低気温が20度以上なら
-                if($minTemperature >= 2000){
-                    // 		トップス半袖
-                    $test = $c_tops->degrees_over_20();
-                    $test_botms = $c_botms->combination_with_tops($test);
-                        dd($test_botms);
-                    // 		トップスの条件式
-                    if(!is_null($test)){
-                        // switch()
-                        $colorId = $test[0];
-                        $test_botms = $c_botms->combination_with_tops($test);
-                        dd($test_botms);
-                        // dd($colorId->color_id);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
                         
+                        // dd($tops_data,$botms_data);
                     }
-                    
+                    else{
+                        return $alert = "服が無い";
+                    }
                 }
                     
                 // 	最低気温が16度以上なら
                 elseif($minTemperature >= 1600 && $minTemperature <= 1999){
                     // 		アウターはなし
-                    $test = $c_tops->degrees_over_16();
-                    $test_botms = $c_botms->combination_with_tops($test);
-                        dd($test_botms);
+                    $tops_data = $c_tops->degrees_over_16();
                     
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        $test_botms = $c_botms->combination_with_tops($test);
-                        dd($test_botms);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                        // dd($botms_data);
                     }
-                    
+                    else{
+                        // dd($botms_data);
+                        return $alert = "服が無い";
+                    }
                 }
                     
                 
                 
                 // 最低気温が15度以下なら	
                 elseif($minTemperature <= 1599){
-                    $test = $c_tops->degrees_under_15();
-                    $test_botms = $c_botms->combination_with_tops();
-                        dd($test_botms);
+                    $tops_data = $c_tops->degrees_under_15();
+                    // dd($tops_data);
                     
-                    if(!is_null($test)){
+                    if(!is_null($tops_data)){
                         // switch()
-                        // dd($test[0]);
-                        $test_botms = $c_botms->combination_with_tops();
-                        dd($test_botms);
+                        $botms_data = $c_botms->combination_with_tops($tops_data);
+                        // dd($botms_data);
+                        
+                        // dd($botms_test);
+                        // 		アウターをつける
+                        if(!is_null($botms_data)){
+                            $outerware_data = $c_outerware->combination_with_botms($botms_data);
+                            // dd($tops_data,$botms_data,$outerware_data);
+                        }
+                        else{
+                            // dd($botms_data);
+                            break;
+                        }
+                        
+                            
+                        // 		アウターの条件式
+                    }
+                    else{
+                        // dd($tops_data);
+                        return $alert = "服が無い";
                     }
                     
-                    // 		アウターをつける
-                    // 		アウターの条件式
                 }
+
+
+                
+                break;
+           
         }
         
         
@@ -643,9 +545,10 @@ class OutfitController extends Controller{
         
 
         // 必要な情報を抽出して返す
+        // dd($tops_data);
         
         // 表示するページの処理
-        return view('outfits.coordinate_gen')->with('outfit', $outfit->get());
+        return view('outfits.coordinate_gen',['tops_data' => $tops_data,'botms_data' => $botms_data, 'outerware_data' => $outerware_data, 'weather_data' => $weatherData,  'mintemperature' => $minTemperature ]);
     }
 
     

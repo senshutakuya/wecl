@@ -2,18 +2,18 @@
 
 namespace App\Libraries;
 
-use App\Models\Tops;
 use App\Models\Botms;
+use App\Models\Outerware;
 use App\Models\Style;
 use App\Models\Part;
 use App\Models\Color;
 use App\Models\Outfit;
-use APP\Libraries\C_Tops;
+use APP\Libraries\C_Botms;
 use Cloudinary;
 
-class C_Botms_Color {
+class C_Outerware_Color {
     private $outfit;
-    private $c_tops;
+    private $c_Botms;
     private $red_color;
     private $orange_color;
     private $yellow_color;
@@ -55,44 +55,44 @@ class C_Botms_Color {
 
     public function __construct() {
         $this->outfit = new Outfit();
-        $this->c_tops = new C_Tops();
+        $this->c_Botms = new C_Botms();
         // 各色のボトムスを取得
-        $this->red_color = $this->getBottomsByColor(1); // 赤のボトムス
-        $this->orange_color = $this->getBottomsByColor(2); // オレンジ色のボトムス
-        $this->yellow_color = $this->getBottomsByColor(3); // 黄色のボトムス
-        $this->green_color = $this->getBottomsByColor(4); // 緑色のボトムス
-        $this->blue_color = $this->getBottomsByColor(5); // 青色のボトムス
-        $this->purple_color = $this->getBottomsByColor(6); // 紫のボトムス
-        $this->brown_color = $this->getBottomsByColor(7); // 茶色のボトムス
-        $this->gray_color = $this->getBottomsByColor(8); // グレーのボトムス
-        $this->white_color = $this->getBottomsByColor(9); // 白色のボトムス
-        $this->skin_color = $this->getBottomsByColor(10); // 肌色のボトムス
-        $this->black_color = $this->getBottomsByColor(11); // 黒色のボトムス
+        $this->red_color = $this->getOuterwareByColor(1); // 赤のボトムス
+        $this->orange_color = $this->getOuterwareByColor(2); // オレンジ色のボトムス
+        $this->yellow_color = $this->getOuterwareByColor(3); // 黄色のボトムス
+        $this->green_color = $this->getOuterwareByColor(4); // 緑色のボトムス
+        $this->blue_color = $this->getOuterwareByColor(5); // 青色のボトムス
+        $this->purple_color = $this->getOuterwareByColor(6); // 紫のボトムス
+        $this->brown_color = $this->getOuterwareByColor(7); // 茶色のボトムス
+        $this->gray_color = $this->getOuterwareByColor(8); // グレーのボトムス
+        $this->white_color = $this->getOuterwareByColor(9); // 白色のボトムス
+        $this->skin_color = $this->getOuterwareByColor(10); // 肌色のボトムス
+        $this->black_color = $this->getOuterwareByColor(11); // 黒色のボトムス
         // 12以降を記載
-        $this->red_yellow = $this->getBottomsByColor(12); // 赤＆黄のボトムス
-        $this->red_blue = $this->getBottomsByColor(13); // 赤＆青のボトムス
-        $this->red_green = $this->getBottomsByColor(14); // 赤＆緑のボトムス
-        $this->red_purple = $this->getBottomsByColor(15); // 赤＆紫のボトムス
-        $this->orange_blue = $this->getBottomsByColor(16); // オレンジ＆青のボトムス
-        $this->orange_green = $this->getBottomsByColor(17); // オレンジ＆緑のボトムス
-        $this->orange_purple = $this->getBottomsByColor(18); // オレンジ＆紫のボトムス
-        $this->yellow_blue = $this->getBottomsByColor(19); // 黄色＆青のボトムス
-        $this->yellow_green = $this->getBottomsByColor(20); // 黄色＆緑のボトムス
-        $this->yellow_purple = $this->getBottomsByColor(21); // 黄色＆紫のボトムス
-        $this->green_blue = $this->getBottomsByColor(22); // 緑＆青のボトムス
-        $this->green_purple = $this->getBottomsByColor(23); // 緑＆紫のボトムス
-        $this->blue_purple = $this->getBottomsByColor(24); // 青＆紫のボトムス
-        $this->pink_orange = $this->getBottomsByColor(25); // ピンク＆オレンジのボトムス
-        $this->pink_purple = $this->getBottomsByColor(26); // ピンク＆紫のボトムス
-        $this->brown_orange = $this->getBottomsByColor(27); // ブラウン＆オレンジのボトムス
-        $this->brown_green = $this->getBottomsByColor(28); // ブラウン＆緑のボトムス
-        $this->brown_blue = $this->getBottomsByColor(29); // ブラウン＆青のボトムス
-        $this->gray_blue = $this->getBottomsByColor(30); // グレー＆ブルーのボトムス
-        $this->gray_pink = $this->getBottomsByColor(31); // グレー＆ピンクのボトムス
-        $this->gray_yellow = $this->getBottomsByColor(32); // グレー＆イエローのボトムス
-        $this->white_black = $this->getBottomsByColor(33); // ホワイト＆ブラックのボトムス
-        $this->white_green = $this->getBottomsByColor(34); // ホワイト＆グリーンのボトムス
-        $this->white_blue = $this->getBottomsByColor(35); // ホワイト＆ブルーのボトムス
+        $this->red_yellow = $this->getOuterwareByColor(12); // 赤＆黄のボトムス
+        $this->red_blue = $this->getOuterwareByColor(13); // 赤＆青のボトムス
+        $this->red_green = $this->getOuterwareByColor(14); // 赤＆緑のボトムス
+        $this->red_purple = $this->getOuterwareByColor(15); // 赤＆紫のボトムス
+        $this->orange_blue = $this->getOuterwareByColor(16); // オレンジ＆青のボトムス
+        $this->orange_green = $this->getOuterwareByColor(17); // オレンジ＆緑のボトムス
+        $this->orange_purple = $this->getOuterwareByColor(18); // オレンジ＆紫のボトムス
+        $this->yellow_blue = $this->getOuterwareByColor(19); // 黄色＆青のボトムス
+        $this->yellow_green = $this->getOuterwareByColor(20); // 黄色＆緑のボトムス
+        $this->yellow_purple = $this->getOuterwareByColor(21); // 黄色＆紫のボトムス
+        $this->green_blue = $this->getOuterwareByColor(22); // 緑＆青のボトムス
+        $this->green_purple = $this->getOuterwareByColor(23); // 緑＆紫のボトムス
+        $this->blue_purple = $this->getOuterwareByColor(24); // 青＆紫のボトムス
+        $this->pink_orange = $this->getOuterwareByColor(25); // ピンク＆オレンジのボトムス
+        $this->pink_purple = $this->getOuterwareByColor(26); // ピンク＆紫のボトムス
+        $this->brown_orange = $this->getOuterwareByColor(27); // ブラウン＆オレンジのボトムス
+        $this->brown_green = $this->getOuterwareByColor(28); // ブラウン＆緑のボトムス
+        $this->brown_blue = $this->getOuterwareByColor(29); // ブラウン＆青のボトムス
+        $this->gray_blue = $this->getOuterwareByColor(30); // グレー＆ブルーのボトムス
+        $this->gray_pink = $this->getOuterwareByColor(31); // グレー＆ピンクのボトムス
+        $this->gray_yellow = $this->getOuterwareByColor(32); // グレー＆イエローのボトムス
+        $this->white_black = $this->getOuterwareByColor(33); // ホワイト＆ブラックのボトムス
+        $this->white_green = $this->getOuterwareByColor(34); // ホワイト＆グリーンのボトムス
+        $this->white_blue = $this->getOuterwareByColor(35); // ホワイト＆ブルーのボトムス
         
         // 他のプロパティの初期化
 
@@ -103,10 +103,10 @@ class C_Botms_Color {
     
     
     // カラーIDを引数で指定して返値でそのボトムスを返す。
-    private function getBottomsByColor($colorId) {
+    private function getOuterwareByColor($colorId) {
         
         // dd($this->outfit->where('part_id', 2)->where('color_id', $colorId)->get());
-        return $this->outfit->where('part_id', 2)->where('color_id', $colorId)->get();
+        return $this->outfit->where('part_id', 3)->where('color_id', $colorId)->get();
     }
 
     // 選ばれたカラーのボトムスの数の中でランダムに１つに絞る
@@ -126,56 +126,68 @@ class C_Botms_Color {
 
     
    // 引数でプロパティ名を指定して判定するメソッド
-    private function baseColorMatch($selectedTopsColor, $confirmationTopsColor, $propertyName) {
+    private function baseColorMatch($selectedBotmsColor, $confirmationBotmsColor, $propertyName) {
         $cColor = null;
         $alertDifferent = "";
-
     
-        if ($selectedTopsColor === $confirmationTopsColor) {
+        if ($selectedBotmsColor === $confirmationBotmsColor) {
             if ($propertyName->isNotEmpty()) {
                 $cColor = $propertyName;
                 $random_item = $this->getRandomColorIndex($propertyName);
+                // dd($random_item);
+                // return [$random_item, $cColor];
             } elseif ($this->black_color->isNotEmpty()) {
                 $cColor = $this->black_color;
                 $random_item = $this->getRandomColorIndex($this->black_color);
+                dd($random_item);
+                // return [$random_item, $cColor];
             } elseif ($this->white_color->isNotEmpty()) {
                 $cColor = $this->white_color;
                 $random_item = $this->getRandomColorIndex($this->white_color);
+                dd($random_item);
+                // return [$random_item, $cColor];
             } elseif ($this->white_color->isEmpty()) {
                 for ($i = 1; $i <= 35; $i++) {
-                    $cColor = $this->getBottomsByColor($i);
+                    $cColor = $this->getOuterwareByColor($i);
+                    // dd($this->getOuterwareBycolor(1));
+                    // dd($this->getRandomColorIndex($alternativeColor));
                     $random_item = $this->getRandomColorIndex($cColor);
-                    if ($cColor->isNotEmpty()) { // ここも $alternativeStyle に変更
+                    if ($cColor->isNotEmpty()) {
                         $alertDifferent = "この色はあいません";
+                        // dd($random_item);
+                        // return [$random_item, $alternativeColor];
                         break;
                     }
                     
                     if($i >=35){
                         break;
                     }
+                    // dd($random_item);
                 }
             } else {
                 throw new \Exception('適した色が見つかりませんでした');
             }
-        }
-    
-        // $randomItem = $this->getRandomColorIndex($cColor);
-    
-        
-        $bColorResult = $cColor[$random_item];
-    
-        return [$bColorResult, $alertDifferent];
+
+    }else{
+         throw new \Exception('適した色が見つかりませんでした');
     }
+        // ここで dd を配置
+        // dd($random_item);
+        $oColorResult = $cColor[$random_item];
     
+        return [$oColorResult, $alertDifferent];
+    }
     
     
     public function getSelectedColor($getcolor) {
         switch ($getcolor) {
             case 1:
+                // 赤
                 // dd($this->baseColorMatch($getcolor, 1, $this->brown_color));
                 return $this->baseColorMatch($getcolor, 1, $this->brown_color);
                 break;
             case 2:
+                // オレンジ
                 return $this->baseColorMatch($getcolor, 2, $this->brown_color);
                 break;
             case 3:
@@ -318,6 +330,5 @@ class C_Botms_Color {
                 break;
         }
     }
-    
 }
     
