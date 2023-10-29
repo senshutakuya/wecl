@@ -21,6 +21,8 @@ Route::get('/', [OutfitController::class, 'logout']);
 // /loginと来たらlogoutに飛ばしてリダイレクトでログイン画面に
 Route::get('/login', [OutfitController::class, 'logout']);
 
+Route::get('/logout', [OutfitController::class, 'logout']);
+
 // ここはBreezeのルート
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

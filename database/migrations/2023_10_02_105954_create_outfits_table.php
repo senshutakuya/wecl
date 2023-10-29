@@ -6,31 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('outfits', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('select_discription', 500);
-            $table->unsignedBigInteger('clothing_id');
-            $table->foreign('clothing_id')->references('id')->on('clothings');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
-
+            $table->string('discription', 500)->nullable();
+            $table->bigInteger('t_id')->nullable();
+            $table->string('t_frontimage', 100)->nullable();
+            $table->string('t_backimage', 100)->nullable();
+            $table->bigInteger('b_id')->nullable();
+            $table->string('b_frontimage', 100)->nullable();
+            $table->string('b_backimage', 100)->nullable();
+            $table->bigInteger('o_id')->nullable();
+            $table->string('o_frontimage', 100)->nullable();
+            $table->string('o_backimage', 100)->nullable();
+            $table->boolean('is_public')->default(true);
+            $table->timestamps(); // created_at, updated_at カラムを有効にします。
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('outfits');
     }
 };
+

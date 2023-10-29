@@ -23,6 +23,7 @@ use App\Models\Accessory;
 use App\Models\Shoes;
 use App\Models\Overlap;
 use App\Models\Impression;
+use App\Models\Starcode;
 use Cloudinary;
 use App\Libraries\C_Tops;
 use App\Libraries\C_Botms; 
@@ -553,6 +554,58 @@ class OutfitController extends Controller{
 
     
     
+    
+    public function cordinate_save(Request $request){
+        $requestData = $request->all();
+
+        // 取得したデータを表示
+        // dd($requestData);
+        
+        // Starモデルをインスタンス化
+        $star_code = new Starcode();
+
+        if($request->select_botms === "one_botms") {
+            $b_id = $request->one_botms_id;
+            $b_frontimage = $request->one_botms_front;
+            $b_backimage = $request->one_botms_back;
+        }else{
+            $b_id = $request->two_botms_id;
+            $b_frontimage = $request->two_botms_front;
+            $b_backimage = $request->two_botms_back;
+        }
+        
+        if($request->select_botms === "one_outerware") {
+            $o_id = $request->one_outerware_id;
+            $o_frontimage = $request->one_outerware_front;
+            $o_backimage = $request->one_outerware_back;
+        }else{
+            $o_id = $request->two_outerware_id;
+            $o_frontimage = $request->two_outerware_front;
+            $o_backimage = $request->two_outerware_back;
+        }
+        
+        
+
+
+        // dd($front_name,$back_name);
+
+            
+        $star_code->t_id = $request->tops_id;
+        $star_code->t_frontimage = $request->tops_front;
+        $star_code->t_backimage = $request->tops_back;
+        $star_code->b_id = $b_id;
+        $star_code->b_frontimage = $b_frontimage;
+        $star_code->b_backimage = $b_backimage;
+        $star_code->o_id = $o_id;
+        $star_code->o_frontimage = $o_frontimage;
+        $star_code->o_backimage = $o_backimage;
+            
+        // データベースに保存
+        $star_code->save();
+        // 画像をアップするページに戻る
+        return back()->with('message', '画像を保存しました');
+    }
+ 
     
 
 

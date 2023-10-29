@@ -18,7 +18,8 @@
         <div class="grid grid-cols-2 gap-4 p-4">
             
             
-            <form action ="/cordinate_save">
+            <form action ="/cordinate_save" method="post">
+                @csrf
                 <!-- トップス -->
                 <a href="/list/tops" class="block text-center hover:underline">
                     <h2 class="text-center">トップス</h2>
@@ -29,6 +30,10 @@
                     @foreach ($tops_data as $as_tops_data)
                         @if ($as_tops_data && isset($as_tops_data->front_image_path))
                             <img src="{{ $as_tops_data->front_image_path }}" alt="トップスの写真が不足している可能性があります。">
+                            <input type="hidden" name="tops_id" value="{{ $as_tops_data->id }}">
+                            <input type="hidden" name="tops_front" value="{{ $as_tops_data->front_image_path }}">
+                            <input type="hidden" name="tops_back" value="{{ $as_tops_data->back_image_path }}">
+                            
                         @endif
                     @endforeach
                 @else
@@ -41,6 +46,8 @@
                     <img src="https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E6%9C%8D%E4%B8%80%E8%A6%A7%E7%94%BB%E9%9D%A2/icons8-%E3%82%B8%E3%83%BC%E3%83%B3%E3%82%BA-50.png" alt="トップス">
                 </a>
                 
+                
+                
                 @if ($botms_data)
                     @foreach ($botms_data as $as_botms_data)
                         @if ($as_botms_data && isset($as_botms_data->front_image_path))
@@ -51,10 +58,34 @@
                     <p>ボトムスデータがありません。</p>
                 @endif
                 
+                
+                @if(count($botms_data) == 4)
+                    <h2>どちらかお選びください</h2>
+                    <select name="select_botoms">
+                        <option value="one_botms">1</option>
+                        <option value="two_botms">2</option>
+                    </select>
+                    <input type="hidden" name="one_botms_id" value="{{ $botms_data[0]->id }}">
+                    <input type="hidden" name="one_botms_front" value="{{ $botms_data[0]->front_image_path }}">
+                    <input type="hidden" name="one_botms_back" value="{{ $botms_data[0]->back_image_path }}">
+                    <input type="hidden" name="two_botms_id" value="{{ $botms_data[2]->id }}">
+                    <input type="hidden" name="two_botms_front" value="{{ $botms_data[2]->front_image_path }}">
+                    <input type="hidden" name="two_botms_back" value="{{ $botms_data[2]->back_image_path }}">
+                    <br>
+                @else
+                    <h2>１つなので選ばなくて大丈夫です<h2>
+                    <input type="hidden" name="select_botms" value="one_botms">
+                    <input type="hidden" name="one_botms_id" value="{{ $botms_data[0]->id }}">
+                    <input type="hidden" name="one_botms_front" value="{{ $botms_data[0]->front_image_path }}">
+                    <input type="hidden" name="one_botms_back" value="{{ $botms_data[0]->back_image_path }}">
+                    <br>
+                @endif
+                
                 <!-- アウター -->
                 <a href="/list/outer" class="block text-center hover:underline">
                     <h2 class="text-center">アウター</h2>
                     <img src="https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E6%9C%8D%E4%B8%80%E8%A6%A7%E7%94%BB%E9%9D%A2/icons8-%E3%82%B8%E3%83%A3%E3%82%B1%E3%83%83%E3%83%88-50.png" alt="トップス">
+                    
                 </a>
                 
                 @if ($mintemperature <= 1599)
@@ -66,7 +97,29 @@
                 @else
                     <p>アウターデータがありません。</p>
                 @endif
-    
+                
+                @if(count($outerware_data) == 4)
+                    <h2>どちらかお選びください</h2>
+                    <select name="select_outerware">
+                        <option value="one_outerware">1</option>
+                        <option value="two_outerware">2</option>
+                    </select>
+                    <input type="hidden" name="one_outerware_id" value="{{ $outerware_data[0]->id }}">
+                    <input type="hidden" name="one_outerware_front" value="{{ $outerware_data[0]->front_image_path }}">
+                    <input type="hidden" name="one_outerware_back" value="{{ $outerware_data[0]->back_image_path }}">
+                    <input type="hidden" name="two_outerware_id" value="{{ $outerware_data[2]->id }}">
+                    <input type="hidden" name="two_outerware_front" value="{{ $outerware_data[2]->front_image_path }}">
+                    <input type="hidden" name="two_outerware_back" value="{{ $outerware_data[2]->back_image_path }}">
+                    <br>
+                @else
+                    <h2>１つなので選ばなくて大丈夫です<h2>
+                        <input type="hidden" name="select_outerware" value="one_outerware">
+                        <input type="hidden" name="one_outerware_id" value="{{ $outerware_data[0]->id }}">
+                        <input type="hidden" name="one_outerware_front" value="{{ $outerware_data[0]->front_image_path }}">
+                        <input type="hidden" name="one_outerware_back" value="{{ $outerware_data[0]->back_image_path }}">
+                    <br>
+                @endif
+                
                 <button type ="submit">お気に入り登録</button>
             
             </form>
