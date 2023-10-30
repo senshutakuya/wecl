@@ -16,12 +16,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 // 最初に来たらlogoutに飛ばしてリダイレクトでログイン画面に
-Route::get('/', [OutfitController::class, 'logout']);
+
+
 
 // /loginと来たらlogoutに飛ばしてリダイレクトでログイン画面に
-Route::get('/login', [OutfitController::class, 'logout']);
 
-Route::get('/logout', [OutfitController::class, 'logout']);
+Route::middleware('auth')->group(function () {
+    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+                    ->name('logout');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+                    ->name('login');
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
+                    ->name('logout');
+    Route::get('/', [AuthenticatedSessionController::class, 'destroy'])
+                    ->name('logout');
+});
 
 // ここはBreezeのルート
 Route::middleware('auth')->group(function () {
@@ -50,6 +59,23 @@ Route::controller(OutfitController::class)->middleware(['auth'])->group(function
     Route::get('/coordinate_gen', 'coordinate_gen')->name('coordinate_gen');
     
     Route::post('/cordinate_save', 'cordinate_save')->name('cordinate_save');
+    
+    Route::get('/list/tops','list_tops')->name('list_tops');
+    
+    Route::get('/list/botms','list_botms')->name('list_botms');
+    
+    Route::get('/list/outer','list_outer')->name('list_outer');
+    
+    Route::get('/list/dress','list_dress')->name('list_dress');
+    
+    Route::get('/list/accessory','list_accessory')->name('list_accessory');
+    
+    Route::get('/list/shoes','list_shoes')->name('list_shoes');
+    
+    Route::get('/list/headgear','list_headgear')->name('list_headgear');
+    
+    Route::get('/list/code','list_code')->name('list_code');
+    
     
     
     

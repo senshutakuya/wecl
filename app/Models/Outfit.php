@@ -57,6 +57,10 @@ class Outfit extends Model
     
     public $timestamps = true;
     
-    // リレーション
+    // public function getBytops(int $limit_count = 5)
+    // {
+    //     $outfit = new Outfit();
+    //     return $tops_list = $this->$outfit->where('part_id', 1)->orderBy('updated_at', 'DESC')->paginate($limit_count);
+    // }
 
 }

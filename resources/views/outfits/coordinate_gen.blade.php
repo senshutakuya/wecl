@@ -98,27 +98,32 @@
                     <p>アウターデータがありません。</p>
                 @endif
                 
-                @if(count($outerware_data) == 4)
-                    <h2>どちらかお選びください</h2>
-                    <select name="select_outerware">
-                        <option value="one_outerware">1</option>
-                        <option value="two_outerware">2</option>
-                    </select>
-                    <input type="hidden" name="one_outerware_id" value="{{ $outerware_data[0]->id }}">
-                    <input type="hidden" name="one_outerware_front" value="{{ $outerware_data[0]->front_image_path }}">
-                    <input type="hidden" name="one_outerware_back" value="{{ $outerware_data[0]->back_image_path }}">
-                    <input type="hidden" name="two_outerware_id" value="{{ $outerware_data[2]->id }}">
-                    <input type="hidden" name="two_outerware_front" value="{{ $outerware_data[2]->front_image_path }}">
-                    <input type="hidden" name="two_outerware_back" value="{{ $outerware_data[2]->back_image_path }}">
-                    <br>
+                @if($outerware_data == null)
+                    <h2>今回はアウター要りません</h2>
                 @else
-                    <h2>１つなので選ばなくて大丈夫です<h2>
-                        <input type="hidden" name="select_outerware" value="one_outerware">
+                    @if(count($outerware_data) == 4)
+                        <h2>どちらかお選びください</h2>
+                        <select name="select_outerware">
+                            <option value="one_outerware">1</option>
+                            <option value="two_outerware">2</option>
+                        </select>
                         <input type="hidden" name="one_outerware_id" value="{{ $outerware_data[0]->id }}">
                         <input type="hidden" name="one_outerware_front" value="{{ $outerware_data[0]->front_image_path }}">
                         <input type="hidden" name="one_outerware_back" value="{{ $outerware_data[0]->back_image_path }}">
-                    <br>
+                        <input type="hidden" name="two_outerware_id" value="{{ $outerware_data[2]->id }}">
+                        <input type="hidden" name="two_outerware_front" value="{{ $outerware_data[2]->front_image_path }}">
+                        <input type="hidden" name="two_outerware_back" value="{{ $outerware_data[2]->back_image_path }}">
+                        <br>
+                    @else
+                        <h2>１つなので選ばなくて大丈夫です<h2>
+                            <input type="hidden" name="select_outerware" value="one_outerware">
+                            <input type="hidden" name="one_outerware_id" value="{{ $outerware_data[0]->id }}">
+                            <input type="hidden" name="one_outerware_front" value="{{ $outerware_data[0]->front_image_path }}">
+                            <input type="hidden" name="one_outerware_back" value="{{ $outerware_data[0]->back_image_path }}">
+                        <br>
+                    @endif
                 @endif
+                
                 
                 <button type ="submit">お気に入り登録</button>
             

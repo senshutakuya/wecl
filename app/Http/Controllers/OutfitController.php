@@ -58,6 +58,13 @@ class OutfitController extends Controller{
     }
     
     
+    public function reload(Request $request){
+        
+        // dd($request);
+        return redirect()->back();
+    }
+    
+    
     public function logout(Request $request)
     {
         // ユーザーをログアウトする処理を実装
@@ -93,13 +100,13 @@ class OutfitController extends Controller{
         ]);
     }
     
-    public function cloth_list()
+    public function cloth_list(Part $part)
     {
         // 他の処理...
         // dd($aaa);
     
         // clothes_list.blade.php ビューを表示
-        return view('outfits.clothes_list');
+        return view('outfits.clothes_list',['parts' => $part->get()]);
     }
 
     
@@ -603,8 +610,98 @@ class OutfitController extends Controller{
         // データベースに保存
         $star_code->save();
         // 画像をアップするページに戻る
-        return back()->with('message', '画像を保存しました');
+        return view('outfits.coordinate');
     }
+    
+    
+    public function list_tops (Outfit $outfit){
+        
+        $tops_list = $outfit->where('part_id', 1)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.tops_list',['tops_list' => $tops_list]);
+        
+    }
+    
+    
+    public function list_botms (Outfit $outfit){
+        
+        $botms_list = $outfit->where('part_id', 2)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.botms_list',['botms_list' => $botms_list]);
+        
+    }
+    
+    
+    public function list_outer (Outfit $outfit){
+        
+        $outerware_list = $outfit->where('part_id', 3)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.outerware_list',['outerware_list' => $outerware_list]);
+        
+    }
+    
+    
+    public function list_dress (Outfit $outfit){
+        
+        $dress_list = $outfit->where('part_id', 4)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.dress_list',['dress_list' => $dress_list]);
+        
+    }
+    
+    
+    public function list_accessory (Outfit $outfit){
+        
+        $accessory_list = $outfit->where('part_id', 5)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.accessory_list',['accessory_list' => $accessory_list]);
+        
+    }
+    
+    
+    public function list_shoes (Outfit $outfit){
+        
+        $shoes_list = $outfit->where('part_id', 6)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.shoes_list',['shoes_list' => $shoes_list]);
+        
+    }
+    
+    
+    public function list_headgear (Outfit $outfit){
+        
+        $headgear_list = $outfit->where('part_id', 7)->orderBy('updated_at', 'desc')->paginate(5);
+
+
+        
+        return view('outfits.headgear_list',['headgear_list' => $headgear_list]);
+        
+    }
+    
+    
+    public function list_code (Starcode $star_code){
+        
+        $code_list = $star_code->orderBy('updated_at', 'desc')->paginate(5);
+
+        
+        return view('outfits.code_list',['code_list' => $code_list]);
+        
+    }
+    
+    
+    
  
     
 
