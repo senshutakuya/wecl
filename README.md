@@ -64,3 +64,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+このアプリの説明
+天気情報を基に自分の登録した服で服装予報をしてくれるアプリです
+Larvel、php、HTML、tailwindcss、gitを使いました。
+またopenweatherapiを使ってジオコーディングを基に入力した区の天気情報を取得してくれるようにしました
