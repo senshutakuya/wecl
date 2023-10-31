@@ -10,7 +10,7 @@
         <x-app-layout>
             <x-slot name="header">
                 <header>
-                <h1>Blog Name</h1>
+                <h1>Blog test</h1>
                 </header>
             </x-slot>
         <div class='posts'>
