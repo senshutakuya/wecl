@@ -42,10 +42,12 @@ class OutfitController extends Controller{
     
     
     private $client;
+    private $user;
     
     public function __construct()
     {
         $this->client = new \GuzzleHttp\Client();
+        $this->user = auth()->user();
     }
     
     
@@ -112,6 +114,8 @@ class OutfitController extends Controller{
     
     public function add(Request $request){
         $requestData = $request->all();
+        
+        $user = auth()->user();
 
         // 取得したデータを表示
         // dd($requestData);
@@ -248,7 +252,7 @@ class OutfitController extends Controller{
         
         // dd($front_name,$back_name);
 
-            
+        $outfit->user_id = $user->id;
         $outfit->front_image_path = $front_name;
         $outfit->back_image_path = $back_name;
         $outfit->gender_id = $genderId;
@@ -287,11 +291,6 @@ class OutfitController extends Controller{
         // 54000d99cbc9d1a4d126abc2b3f7c5a7
         
         $outfit = new Outfit();
-        
-        $outfitWithPartId2 = $outfit->firstWhere([
-            'part_id' => 1,
-            'length_id' => 1
-        ]);
         
         // dd($outfitWithPartId2);
         
@@ -564,6 +563,7 @@ class OutfitController extends Controller{
     
     public function cordinate_save(Request $request){
         $requestData = $request->all();
+        $user = auth()->user();
 
         // 取得したデータを表示
         // dd($requestData);
@@ -581,7 +581,7 @@ class OutfitController extends Controller{
             $b_backimage = $request->two_botms_back;
         }
         
-        if($request->select_botms === "one_outerware") {
+        if($request->select_outerware === "one_outerware") {
             $o_id = $request->one_outerware_id;
             $o_frontimage = $request->one_outerware_front;
             $o_backimage = $request->one_outerware_back;
@@ -596,7 +596,7 @@ class OutfitController extends Controller{
 
         // dd($front_name,$back_name);
 
-            
+        $star_code->user_id = $user->id;
         $star_code->t_id = $request->tops_id;
         $star_code->t_frontimage = $request->tops_front;
         $star_code->t_backimage = $request->tops_back;
@@ -606,6 +606,8 @@ class OutfitController extends Controller{
         $star_code->o_id = $o_id;
         $star_code->o_frontimage = $o_frontimage;
         $star_code->o_backimage = $o_backimage;
+        
+        // dd($o_frontimage);
             
         // データベースに保存
         $star_code->save();
@@ -615,8 +617,10 @@ class OutfitController extends Controller{
     
     
     public function list_tops (Outfit $outfit){
+        $user = auth()->user();
+        // dd($this->user);
         
-        $tops_list = $outfit->where('part_id', 1)->orderBy('updated_at', 'desc')->paginate(5);
+        $tops_list = $outfit->where('part_id', 1)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -626,8 +630,8 @@ class OutfitController extends Controller{
     
     
     public function list_botms (Outfit $outfit){
-        
-        $botms_list = $outfit->where('part_id', 2)->orderBy('updated_at', 'desc')->paginate(5);
+        $user = auth()->user();
+        $botms_list = $outfit->where('part_id', 2)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -637,8 +641,8 @@ class OutfitController extends Controller{
     
     
     public function list_outer (Outfit $outfit){
-        
-        $outerware_list = $outfit->where('part_id', 3)->orderBy('updated_at', 'desc')->paginate(5);
+        $user = auth()->user();
+        $outerware_list = $outfit->where('part_id', 3)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -648,8 +652,8 @@ class OutfitController extends Controller{
     
     
     public function list_dress (Outfit $outfit){
-        
-        $dress_list = $outfit->where('part_id', 4)->orderBy('updated_at', 'desc')->paginate(5);
+        $user = auth()->user();
+        $dress_list = $outfit->where('part_id', 4)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -659,8 +663,8 @@ class OutfitController extends Controller{
     
     
     public function list_accessory (Outfit $outfit){
-        
-        $accessory_list = $outfit->where('part_id', 5)->orderBy('updated_at', 'desc')->paginate(5);
+        $user = auth()->user();
+        $accessory_list = $outfit->where('part_id', 5)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -670,8 +674,8 @@ class OutfitController extends Controller{
     
     
     public function list_shoes (Outfit $outfit){
-        
-        $shoes_list = $outfit->where('part_id', 6)->orderBy('updated_at', 'desc')->paginate(5);
+        $user = auth()->user();
+        $shoes_list = $outfit->where('part_id', 6)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -681,8 +685,8 @@ class OutfitController extends Controller{
     
     
     public function list_headgear (Outfit $outfit){
-        
-        $headgear_list = $outfit->where('part_id', 7)->orderBy('updated_at', 'desc')->paginate(5);
+        $user = auth()->user();
+        $headgear_list = $outfit->where('part_id', 7)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -693,7 +697,10 @@ class OutfitController extends Controller{
     
     public function list_code (Starcode $star_code){
         
-        $code_list = $star_code->orderBy('updated_at', 'desc')->paginate(5);
+        // dd($this->user);
+        $user = auth()->user();
+        
+        $code_list = $star_code->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
         
         return view('outfits.code_list',['code_list' => $code_list]);

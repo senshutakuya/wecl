@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('outfits', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('discription', 500)->nullable();
             $table->bigInteger('t_id')->nullable();
             $table->string('t_frontimage', 100)->nullable();
@@ -22,12 +23,16 @@ return new class extends Migration
             $table->string('o_backimage', 100)->nullable();
             $table->boolean('is_public')->default(true);
             $table->timestamps(); // created_at, updated_at カラムを有効にします。
+            
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
     public function down()
     {
         Schema::dropIfExists('outfits');
+        $table->dropForeign('clothings_user_id_foreign');
     }
 };
 

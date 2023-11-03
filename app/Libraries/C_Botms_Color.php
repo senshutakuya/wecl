@@ -49,6 +49,7 @@ class C_Botms_Color {
     private $white_black;
     private $white_green;
     private $white_blue;
+    private $user;
 
     
     // 他のプロパティ
@@ -56,6 +57,7 @@ class C_Botms_Color {
     public function __construct() {
         $this->outfit = new Outfit();
         $this->c_tops = new C_Tops();
+        $this->user = auth()->user();
         // 各色のボトムスを取得
         $this->red_color = $this->getBottomsByColor(1); // 赤のボトムス
         $this->orange_color = $this->getBottomsByColor(2); // オレンジ色のボトムス
@@ -106,7 +108,7 @@ class C_Botms_Color {
     private function getBottomsByColor($colorId) {
         
         // dd($this->outfit->where('part_id', 2)->where('color_id', $colorId)->get());
-        return $this->outfit->where('part_id', 2)->where('color_id', $colorId)->get();
+        return $this->outfit->where('part_id', 2)->where('color_id', $colorId)->where('user_id', $this->user->id)->get();
     }
 
     // 選ばれたカラーのボトムスの数の中でランダムに１つに絞る

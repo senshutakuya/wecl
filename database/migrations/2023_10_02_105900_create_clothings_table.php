@@ -14,6 +14,7 @@ class CreateClothingsTable extends Migration
     {
         Schema::create('clothings', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('discription', 500)->nullable();
             $table->string('front_image_path', 100);
             $table->string('back_image_path', 100);
@@ -36,6 +37,7 @@ class CreateClothingsTable extends Migration
             $table->boolean('delete_flag')->default(false); // 削除フラグ
 
             // 外部キー制約を追加
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('gender_id')->references('id')->on('genders');
             $table->foreign('season_id')->references('id')->on('seasons');
             $table->foreign('style_id')->references('id')->on('styles');
@@ -66,6 +68,7 @@ class CreateClothingsTable extends Migration
     {
         Schema::table('clothings', function (Blueprint $table) {
             // 外部キー制約の削除
+            $table->dropForeign('clothings_user_id_foreign');
             $table->dropForeign('clothings_gender_id_foreign');
             $table->dropForeign('clothings_season_id_foreign');
             $table->dropForeign('clothings_style_id_foreign');

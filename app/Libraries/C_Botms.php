@@ -39,24 +39,33 @@ class C_Botms
         // $Tops_result = $this->get_tops->random_tops( $this->request , $this->outfit ,  $this->c_tops); // 例: 選択したtopsを取得
         $Tops_result = $test;
         // dd($Tops_result);
-        $Tops_colorResult = $Tops_result[0]->color_id; // 例: 選択したカラーを取得
-        // dd($Tops_colorResult);
-        // dd($Tops_colorResult);
-        $Tops_styleResult = $Tops_result[0]->style_id; // 例: 選択したスタイルを取得
         
-        // まずセレクトボトムスという配列にcolorとstyleの結果を入れる
-        // セレクトボトムス[0]はcolor[1]はstyle
-        $Botms_result[0] = $this->c_color->getSelectedColor($Tops_colorResult);
-        // dd($this->c_color->getSelectedColor(1));
-        $Botms_result[1] = $this->c_style->getSelectedStyle($Tops_styleResult);
+        if(!is_null($Tops_result[0])){
+                
+            
+            $Tops_colorResult = $Tops_result[0]->color_id; // 例: 選択したカラーを取得
+            // dd($Tops_colorResult);
+            // dd($Tops_colorResult);
+            $Tops_styleResult = $Tops_result[0]->style_id; // 例: 選択したスタイルを取得
+            
+            // まずセレクトボトムスという配列にcolorとstyleの結果を入れる
+            // セレクトボトムス[0]はcolor[1]はstyle
+            $Botms_result[0] = $this->c_color->getSelectedColor($Tops_colorResult);
+            // dd($this->c_color->getSelectedColor(1));
+            $Botms_result[1] = $this->c_style->getSelectedStyle($Tops_styleResult);
+            
+            $colorResult = $Botms_result[0];
+            $styleResult = $Botms_result[1];
+            
+            // dd($colorResult[0]->id);
+            // dd($Tops_colorResult);
+            // dd($Tops_result);
+            // dd($this->c_color->getSelectedColor(1));
         
-        $colorResult = $Botms_result[0];
-        $styleResult = $Botms_result[1];
-        
-        // dd($colorResult[0]->id);
-        // dd($Tops_colorResult);
-        // dd($Tops_result);
-        // dd($this->c_color->getSelectedColor(1));
+        }else{
+            $colorResult = null;
+            $styleResult = null;
+        }
 
         // もしcolorとstyleがどちらもあって且つidが同じものなら
         if(!is_null($colorResult) && !is_null($styleResult) && $colorResult[0]->id === $styleResult[0]->id){
@@ -82,7 +91,7 @@ class C_Botms
             $styleMatchedBottoms = $this->selectBottomsByStyle($styleResult);
             return $styleMatchedBottoms;
         } else {
-            throw new \Exception('似合う服がありません、追加してください');
+            return null;
         }
         
     }

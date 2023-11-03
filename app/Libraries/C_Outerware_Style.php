@@ -23,11 +23,13 @@ class C_Outerware_Style {
     private $mode;
     private $boyish;
     private $drat;
+    private $user;
     // 他のプロパティ
 
     public function __construct() {
         $this->outfit = new Outfit();
         $this->c_Botms = new C_Botms();
+        $this->user = auth()->user();
         // 各色のボトムスを取得
         
         $this->natural = $this->getOuterwareByStyle(1); 
@@ -52,7 +54,7 @@ class C_Outerware_Style {
     
     // ここで引数に入れられたスタイルIDが該当するボトムスを取得する処理を書く
     private function getOuterwareByStyle($styleId) {
-        return $this->outfit->where('part_id', 2)->where('style_id', $styleId)->get();
+        return $this->outfit->where('part_id', 2)->where('style_id', $styleId)->where('user_id', $this->user->id)->get();
     }
     
     private function getRandomStyleIndex($styleArray) {

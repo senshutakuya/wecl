@@ -29,29 +29,35 @@ class C_Tops
 
         // Outfitをインスタンス化
         $outfit = new Outfit();
+        
+        $user = auth()->user(); // ログインユーザーを取得
 
         // partのidが1(トップス)かつlength_idが1(半袖)の物を取得
         $this->short_sleeve = $outfit->Where([
-            'part_id' => 1,
-            'length_id' => 1
-        ])->get();
-
-        // トップス且つ七分丈の物を取得
-        $this->seveneighths_length = $outfit->Where([
+            'user_id'=>$user->id,
             'part_id' => 1,
             'length_id' => 2
         ])->get();
 
-        // 長袖
-        $this->long_sleeve = $outfit->Where([
+        // トップス且つ七分丈の物を取得
+        $this->seveneighths_length = $outfit->Where([
+            'user_id'=>$user->id,
             'part_id' => 1,
             'length_id' => 3
         ])->get();
 
-        // 袖なし
-        $this->non_sleeve = $outfit->Where([
+        // 長袖
+        $this->long_sleeve = $outfit->Where([
+            'user_id'=>$user->id,
             'part_id' => 1,
             'length_id' => 4
+        ])->get();
+
+        // 袖なし
+        $this->non_sleeve = $outfit->Where([
+            'user_id'=>$user->id,
+            'part_id' => 1,
+            'length_id' => 1
         ])->get();
         
         $this->non_item_length = count($this->non_sleeve);
@@ -76,17 +82,17 @@ class C_Tops
         $random_item = 0;
         
 
-        if ($this->random_length === 1 && !is_null($this->short_sleeve)) {
+        if ($this->random_length === 2 && !is_null($this->short_sleeve)) {
             // トップス半袖
             $result_length = $this->short_sleeve;
             $count_item = $this->short_item_length;
             $random_item = $this->short_random_tops; // 修正
-        } elseif ($this->random_length === 2 && !is_null($this->seveneighths_length)) {
+        } elseif ($this->random_length === 3 && !is_null($this->seveneighths_length)) {
             // 七分丈
             $result_length = $this->seveneighths_length;
             $count_item = $this->seven_item_length;
             $random_item = $this->seven_random_tops; // 修正
-        } elseif ($this->random_length === 3 && !is_null($this->non_sleeve)) {
+        } elseif ($this->random_length === 1 && !is_null($this->non_sleeve)) {
             // 袖なし
             $result_length = $this->non_sleeve;
             $count_item = $this->non_item_length;
@@ -101,10 +107,18 @@ class C_Tops
             throw new \Exception('トップスがありません');
         }
         
+        // dd($result_length);
+        
         // $random_item を使用して結果を取得
-        $selected_result = $result_length[$random_item];
-
-        return [$selected_result, $count_item, $random_item];
+        if ($result_length->isNotEmpty()) {
+            // トップスが見つかった場合の処理
+            $selected_result = $result_length[$random_item];
+            return [$selected_result, $count_item, $random_item];
+        } else {
+            // トップスが見つからない場合の処理
+            $selected_result = null;
+            return [$selected_result, $count_item, $random_item];
+        }
     }
     
     // 16度以上なら
@@ -140,11 +154,17 @@ class C_Tops
             // トップスが見つからない場合、例外をスローする
             throw new \Exception('トップスがありません');
         }
-
+        // dd($result_length);
         // $random_item を使用して結果を取得
-        $selected_result = $result_length[$random_item];
-
-        return [$selected_result, $count_item, $random_item];
+        if ($result_length->isNotEmpty()) {
+            // トップスが見つかった場合の処理
+            $selected_result = $result_length[$random_item];
+            return [$selected_result, $count_item, $random_item];
+        } else {
+            // トップスが見つからない場合の処理
+            $selected_result = null;
+            return [$selected_result, $count_item, $random_item];
+        }
     }
     
     // 15度以下なら
@@ -155,10 +175,13 @@ class C_Tops
         $random_item = 0;
         
         $random_15_under = $this->random_length = random_int(3, 4);
+        $result_length = $this->seveneighths_length;
+        // dd($result_length);
 
         if ($this->random_length === 3 && !is_null($this->seveneighths_length)) {
             // 七分丈
             $result_length = $this->seveneighths_length;
+            // dd($result_length);
             $count_item = $this->seven_item_length;
             $random_item = $this->seven_random_tops; // 修正
         } elseif ($this->random_length === 4 && !is_null($this->long_sleeve)) {
@@ -182,8 +205,17 @@ class C_Tops
         }
 
         // $random_item を使用して結果を取得
-        $selected_result = $result_length[$random_item];
+        // dd($result_length);
+        if ($result_length->isNotEmpty()) {
+            // トップスが見つかった場合の処理
+            $selected_result = $result_length[$random_item];
+            return [$selected_result, $count_item, $random_item];
+        } else {
+            // トップスが見つからない場合の処理
+            $selected_result = null;
+            return [$selected_result, $count_item, $random_item];
+        }
 
-        return [$selected_result, $count_item, $random_item];
+
     }
 }

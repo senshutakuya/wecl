@@ -19,10 +19,10 @@ class LengthSeeder extends Seeder
     {
         // カラム名を指定してデータを挿入
         DB::table('lengths')->insert([
+            ['length' => '袖なし'],
             ['length' => '半袖'],
             ['length' => '七分丈'],
             ['length' => '長袖'],
-            ['length' => '袖なし'],
         ]);
     }
 
