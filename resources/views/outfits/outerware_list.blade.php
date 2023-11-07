@@ -27,7 +27,7 @@
             <img src="{{ $outerware->back_image_path }}" alt="アウターウェアの写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($outerware->style_id)
+            @switch($outerware->outerware_id)
                 @case(1)
                     <p>ジャケット</p>
                     @break

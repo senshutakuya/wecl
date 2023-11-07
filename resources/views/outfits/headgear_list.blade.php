@@ -27,7 +27,7 @@
             <img src="{{ $headgear->back_image_path }}" alt="被り物の写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($headgear->style_id)
+            @switch($headgear->overlap_id)
                 @case(1)
                     <p>キャップ</p>
                     @break

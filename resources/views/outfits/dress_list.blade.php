@@ -27,7 +27,7 @@
             <img src="{{ $dress->back_image_path }}" alt="ドレスの写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($dress->style_id)
+            @switch($dress->dress_id)
                 @case(1)
                     <p>カジュアルドレス</p>
                     @break

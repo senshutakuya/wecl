@@ -27,7 +27,7 @@
             <img src="{{ $botms->back_image_path }}" alt="ボトムスの写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($botms->style_id)
+            @switch($botms->botms_id)
                 @case(1)
                     <p>ジーンズ</p>
                     @break

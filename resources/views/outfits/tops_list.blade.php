@@ -18,7 +18,7 @@
                 {{ $tops_list->links() }}
             </div>
             
-            
+
         @foreach($tops_list as $tops)
             <h2>前画像</h2>
             <img src="{{ $tops->front_image_path }}" alt="トップスの写真が不足している可能性があります.">
@@ -27,7 +27,8 @@
             <img src="{{ $tops->back_image_path }}" alt="トップスの写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($tops->style_id)
+            
+            @switch($tops->tops_id)
                 @case(1)
                     <p>Tシャツ</p>
                     @break
@@ -55,6 +56,8 @@
                 @default
                     <p>スタイルなし</p>
             @endswitch
+            
+            <a href="{{ route('edit', ['post' => $tops->id]) }}">編集</a>
             
             <br><br>
         @endforeach
