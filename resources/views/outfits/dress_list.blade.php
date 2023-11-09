@@ -59,6 +59,20 @@
             <a href="{{ route('edit', ['post' => $dress->id]) }}">編集</a>
             
             <br><br>
+            <br><br>
+            
+            <form action="/list/{{ $dress->id }}" id="form_{{ $dress->id }}" method="post">
+                <!--posts/idに送信、idはform_idとするメソッドはpost-->
+                @csrf
+                <!--csrf対策-->
+                @method('DELETE')
+                <!--HTMLでDELETEはサポートされていないから-->
+                <button type="button" onclick="deletePost({{ $dress->id }})">削除</button> 
+                <!--JavaScriptで処理を書くからsubmitじゃなくてbuttonにする-->
+                <!--onclickにはこのボタンがクリックされた場合の処理を書く今回だとidを格納している-->
+                <!--この格納したidはJavaScriptのdeletePostの引数に使われる。-->
+            </form>
+            
         @endforeach
         
         <div class="pagination">
@@ -66,6 +80,7 @@
         </div>
     
     </x-app-layout>
+    <script src="{{ asset('js/deletePost.js') }}"></script>
     </body>
 </html>
 

@@ -59,6 +59,20 @@
             <a href="{{ route('edit', ['post' => $outerware->id]) }}">編集</a>
             
             <br><br>
+            
+            <form action="/list/{{ $outerware->id }}" id="form_{{ $outerware->id }}" method="post">
+                <!--posts/idに送信、idはform_idとするメソッドはpost-->
+                @csrf
+                <!--csrf対策-->
+                @method('DELETE')
+                <!--HTMLでDELETEはサポートされていないから-->
+                <button type="button" onclick="deletePost({{ $outerware->id }})">削除</button> 
+                <!--JavaScriptで処理を書くからsubmitじゃなくてbuttonにする-->
+                <!--onclickにはこのボタンがクリックされた場合の処理を書く今回だとidを格納している-->
+                <!--この格納したidはJavaScriptのdeletePostの引数に使われる。-->
+            </form>
+            
+            <br><br>
         @endforeach
         
         
@@ -67,6 +81,7 @@
         </div>
     
     </x-app-layout>
+    <script src="{{ asset('js/deletePost.js') }}"></script>
     </body>
 </html>
 

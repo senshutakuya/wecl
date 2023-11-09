@@ -894,6 +894,47 @@ class OutfitController extends Controller{
     }
     
     
+     public function delete(Outfit $outfit , $deletePost)
+    {
+        $user = auth()->user();
+        $delete_list = $outfit->where('user_id', $user->id)->where('id', $deletePost)->first();
+        // $outfit->delete();
+        // dd($deletePost);
+        // dd($delete_list);
+        if ($delete_list) {
+            $delete_list->delete();
+        // レコードが存在すれば削除
+        }   
+        // モデルクラスのdelete関数を使う事で簡単に消せる
+        return redirect('/list');
+        // /にリダイレクト処理
+    }
+    
+    public function delete_code(Starcode $starcode , $deletePost)
+    {
+        $user = auth()->user();
+        $delete_list = $starcode->where('user_id', $user->id)->where('id', $deletePost)->first();
+        // $outfit->delete();
+        // dd($deletePost);
+        // dd($delete_list);
+        if ($delete_list) {
+            $delete_list->delete();
+        // レコードが存在すれば削除
+        }   
+        // モデルクラスのdelete関数を使う事で簡単に消せる
+        return redirect('/list');
+        // /にリダイレクト処理
+    }
+    
+    // 例: コントローラー内での復元の処理
+    public function restoreRecord($post , Outfit $outfit)
+    {
+        // ソフトデリートされたレコードを復元
+        $outfit::withTrashed()->find($post)->restore();
+    
+        return redirect('/list');
+    }
+    
         
     
     

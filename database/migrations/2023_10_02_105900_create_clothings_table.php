@@ -56,6 +56,7 @@ class CreateClothingsTable extends Migration
             $table->foreign('overlap_id')->references('id')->on('overlaps');
 
             $table->timestamps(); // created_at, updated_at カラムを有効にします。
+            $table->softDeletes(); // ここでSoftDeletesを有効にします。
         });
     }
 

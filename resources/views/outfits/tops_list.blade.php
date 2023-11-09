@@ -56,8 +56,21 @@
                 @default
                     <p>スタイルなし</p>
             @endswitch
-            
+            <button>
             <a href="{{ route('edit', ['post' => $tops->id]) }}">編集</a>
+            </button>
+            <br><br>
+            <form action="/list/{{ $tops->id }}" id="form_{{ $tops->id }}" method="post">
+                <!--posts/idに送信、idはform_idとするメソッドはpost-->
+                @csrf
+                <!--csrf対策-->
+                @method('DELETE')
+                <!--HTMLでDELETEはサポートされていないから-->
+                <button type="button" onclick="deletePost({{ $tops->id }})">削除</button> 
+                <!--JavaScriptで処理を書くからsubmitじゃなくてbuttonにする-->
+                <!--onclickにはこのボタンがクリックされた場合の処理を書く今回だとidを格納している-->
+                <!--この格納したidはJavaScriptのdeletePostの引数に使われる。-->
+            </form>
             
             <br><br>
         @endforeach
@@ -67,6 +80,10 @@
         </div>
     
     </x-app-layout>
+     <!--先にHTMLを読み込ませて表示速度を上げる為scriptはbodyの一番後ろ-->
+        <!-- 外部のJavaScriptファイルを読み込む -->
+        <!--public/js/deletePost.jsを読み込む-->
+        <script src="{{ asset('js/deletePost.js') }}"></script>
     </body>
 </html>
 

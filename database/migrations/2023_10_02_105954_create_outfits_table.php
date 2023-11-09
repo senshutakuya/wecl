@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('o_backimage', 100)->nullable();
             $table->boolean('is_public')->default(true);
             $table->timestamps(); // created_at, updated_at カラムを有効にします。
-            
+            $table->softDeletes(); // ここでSoftDeletesを有効にします。
             
             $table->foreign('user_id')->references('id')->on('users');
         });
