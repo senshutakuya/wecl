@@ -191,7 +191,7 @@ class OutfitController extends Controller{
         $categoryKeys = array_keys($A_array_categoryData);
         
         // デバッグでキーを出力
-        // dd($categoryKeys[1]);
+        // dd($requestData);
         
         switch ($categoryKeys[1]) {
             case 'tops':
@@ -667,7 +667,7 @@ class OutfitController extends Controller{
     
     public function list_accessory (Outfit $outfit){
         $user = auth()->user();
-        $accessory_list = $outfit->where('part_id', 5)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
+        $accessory_list = $outfit->where('part_id', 6)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -678,7 +678,7 @@ class OutfitController extends Controller{
     
     public function list_shoes (Outfit $outfit){
         $user = auth()->user();
-        $shoes_list = $outfit->where('part_id', 6)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
+        $shoes_list = $outfit->where('part_id', 7)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -689,7 +689,7 @@ class OutfitController extends Controller{
     
     public function list_headgear (Outfit $outfit){
         $user = auth()->user();
-        $headgear_list = $outfit->where('part_id', 7)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
+        $headgear_list = $outfit->where('part_id', 8)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         

@@ -56,6 +56,8 @@
                     <p>スタイルなし</p>
             @endswitch
             
+            <a href="{{ route('edit', ['post' => $botms->id]) }}">編集</a>
+            
             <br><br>
         @endforeach
         

@@ -56,8 +56,11 @@
                     <p>スタイルなし</p>
             @endswitch
             
+            <a href="{{ route('edit', ['post' => $outerware->id]) }}">編集</a>
+            
             <br><br>
         @endforeach
+        
         
         <div class="pagination">
             {{ $outerware_list->links() }}

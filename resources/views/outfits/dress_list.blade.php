@@ -18,7 +18,7 @@
                 {{ $dress_list->links() }}
             </div>
             
-            
+           
         @foreach($dress_list as $dress)
             <h2>前画像</h2>
             <img src="{{ $dress->front_image_path }}" alt="ドレスの写真が不足している可能性があります.">
@@ -27,7 +27,7 @@
             <img src="{{ $dress->back_image_path }}" alt="ドレスの写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($dress->dress_id)
+            @switch($dress->dores_id)
                 @case(1)
                     <p>カジュアルドレス</p>
                     @break
@@ -55,6 +55,8 @@
                 @default
                     <p>スタイルなし</p>
             @endswitch
+            
+            <a href="{{ route('edit', ['post' => $dress->id]) }}">編集</a>
             
             <br><br>
         @endforeach

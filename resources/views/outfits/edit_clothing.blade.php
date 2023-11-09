@@ -111,7 +111,7 @@
                 <!-- outfits/upload.blade.php -->
 
                 <div class="length">
-                    <h2>部位</h2>
+                    <h2>袖の長さ</h2>
                     <select name="post[length_id]">
                         @foreach ($lengths as $length)
                             <option value="{{ $length }}"{{ $length->id == $outfit->length_id ? 'selected' : '' }}>{{ $length->length }}</option>

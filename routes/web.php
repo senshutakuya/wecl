@@ -22,8 +22,8 @@ use Illuminate\Support\Facades\Route;
 // /loginと来たらlogoutに飛ばしてリダイレクトでログイン画面に
 
 Route::middleware('auth')->group(function () {
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                    ->name('logout');
+    // Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    //                 ->name('logout');
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                     ->name('login');
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])

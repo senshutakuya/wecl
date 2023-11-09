@@ -56,6 +56,8 @@
                     <p>スタイルなし</p>
             @endswitch
             
+            <a href="{{ route('edit', ['post' => $shoes->id]) }}">編集</a>
+            
             <br><br>
         @endforeach
         
