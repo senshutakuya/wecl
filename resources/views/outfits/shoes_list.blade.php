@@ -27,7 +27,7 @@
             <img src="{{ $shoes->back_image_path }}" alt="靴の写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($shoes->style_id)
+            @switch($shoes->shoes_id)
                 @case(1)
                     <p>スニーカー</p>
                     @break
@@ -55,6 +55,8 @@
                 @default
                     <p>スタイルなし</p>
             @endswitch
+            
+            <a href="{{ route('edit', ['post' => $shoes->id]) }}">編集</a>
             
             <br><br>
         @endforeach

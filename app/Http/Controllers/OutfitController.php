@@ -184,12 +184,14 @@ class OutfitController extends Controller{
         // category_id
         $A_array_categoryData = json_decode($request->input('post.category_id'), true);
         
+        // dd($A_array_categoryData);
+        
         $categoryData = json_decode($request->input('post.category_id'));
 
         $categoryKeys = array_keys($A_array_categoryData);
         
         // デバッグでキーを出力
-        // dd($categoryKeys[1]);
+        // dd($requestData);
         
         switch ($categoryKeys[1]) {
             case 'tops':
@@ -247,8 +249,9 @@ class OutfitController extends Controller{
         // dd($impressionId);
         
         // color_id
+        // dd($request->input('post.color_id'));
         $colorData = json_decode($request->input('post.color_id'));
-        $colorId = $colorData->id;
+        $colorId = $request->input('post.color_id');
         
         // dd($front_name,$back_name);
 
@@ -664,7 +667,7 @@ class OutfitController extends Controller{
     
     public function list_accessory (Outfit $outfit){
         $user = auth()->user();
-        $accessory_list = $outfit->where('part_id', 5)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
+        $accessory_list = $outfit->where('part_id', 6)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -675,7 +678,7 @@ class OutfitController extends Controller{
     
     public function list_shoes (Outfit $outfit){
         $user = auth()->user();
-        $shoes_list = $outfit->where('part_id', 6)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
+        $shoes_list = $outfit->where('part_id', 7)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -686,7 +689,7 @@ class OutfitController extends Controller{
     
     public function list_headgear (Outfit $outfit){
         $user = auth()->user();
-        $headgear_list = $outfit->where('part_id', 7)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
+        $headgear_list = $outfit->where('part_id', 8)->where('user_id', $user->id)->orderBy('updated_at', 'desc')->paginate(5);
 
 
         
@@ -707,6 +710,191 @@ class OutfitController extends Controller{
         
     }
     
+    
+    public function edit($post, Outfit $outfit, Request $request, Gender $gender, Season $season, Style $style, Part $part, Length $length, Size $size, Tops $tops, Botms $botms, Dores $dores, Outerware $outerware, Accessory $accessory, Shoes $shoes, Overlap $overlap, Impression $impression, Color $color){
+        $user = auth()->user();
+        // dd($post);
+        $outfit = $outfit::where('user_id', $user->id)->where('id', $post);
+        $outfit = $outfit->get();
+        // $previous_id = $request->previous_data;
+        // // dd($previous_id);
+        // $previous = $outfit->where('id', $previous_id)->where('user_id', $user->id);
+        // $tmp = $previous->get();
+        // // dd($previous);
+        // $previous_data = $tmp[0];
+        // dd($post);
+        return view('outfits.edit_clothing')->with([
+            // 'categories' => $category->get(),
+            'genders' => $gender->get(),
+            'seasons' => $season->get(),
+            'styles' => $style->get(),
+            'parts' => $part->get(),
+            'lengths' => $length->get(),
+            'sizes' => $size->get(),
+            'impressions' => $impression->get(),
+            'tops' => $tops->get(),
+            'botms' => $botms->get(),
+            'dores' => $dores->get(),
+            'outerwares' => $outerware->get(),
+            'accessories' => $accessory->get(),
+            'shoes' => $shoes->get(),
+            'overlaps' => $overlap->get(),
+            'colors' => $color->get(),
+            // 'previous_data' => $previous_data,
+            // 'post' =>$post,
+            'outfit' =>$outfit[0],
+            
+        ]);
+        
+    }
+    
+    public function update($post, Outfit $outfit, Request $request, Gender $gender, Season $season, Style $style, Part $part, Length $length, Size $size, Tops $tops, Botms $botms, Dores $dores, Outerware $outerware, Accessory $accessory, Shoes $shoes, Overlap $overlap, Impression $impression, Color $color) {
+        $requestData = $request->all();
+        
+        // ユーザーを取得
+        $user = auth()->user();
+        // dd($post);
+        // 前回のデータを取得
+        $previous_data = $outfit::where('user_id', $user->id)->where('id', $post);
+        $previous_data = $previous_data->get();
+        $previous_data = $previous_data[0];
+        // 新しい画像ファイルの処理
+        if ($request->hasFile('front_upfile_camera')) {
+            $front_name = Cloudinary::upload($request->file('front_upfile_camera')->getRealPath())->getSecurePath();
+        } else {
+            $front_name = $requestData["previous_front"];
+        }
+        
+        if ($request->hasFile('back_upfile_camera')) {
+            $back_name = Cloudinary::upload($request->file('back_upfile_camera')->getRealPath())->getSecurePath();
+        } else {
+            $back_name = $requestData["previous_back"];
+        }
+    
+        // 各属性のデータを取得
+        $genderData = json_decode($request->input('post.gender_id'));
+        $genderId = $genderData->id;
+    
+        $seasonData = json_decode($request->input('post.season_id'));
+        $seasonId = $seasonData->id;
+    
+        $styleData = json_decode($request->input('post.style_id'));
+        $styleId = $styleData->id;
+    
+        $partData = json_decode($request->input('post.part_id'));
+        $partId = $partData->id;
+    
+        $lengthData = json_decode($request->input('post.length_id'));
+        $lengthId = $lengthData->id;
+    
+        $sizeData = json_decode($request->input('post.size_id'));
+        $sizeId = $sizeData->id;
+    
+        // 他の属性についても同様に取得
+    
+        // カテゴリIDを取得
+        $A_array_categoryData = json_decode($request->input('post.category_id'), true);
+        $categoryData = json_decode($request->input('post.category_id'));
+        $categoryKeys = array_keys($A_array_categoryData);
+    
+        // カテゴリに応じてIDを設定
+        $tops_Id = null;
+        $botms_Id = null;
+        $outerware_Id = null;
+        $accessory_Id = null;
+        $shoes_Id = null;
+        $overlap_Id = null;
+        $dores_Id = null;
+    
+        switch ($categoryKeys[1]) {
+            case 'tops':
+                $tops_Id = $categoryData->id;
+                $outfit->tops_id = $tops_Id;
+                break;
+    
+            case 'botms':
+                $botms_Id = $categoryData->id;
+                $outfit->botms_id = $botms_Id;
+                break;
+    
+            case 'dores':
+                $dores_Id = $categoryData->id;
+                $outfit->dores_id = $dores_Id;
+                break;
+    
+            case 'outerware':
+                $outerware_Id = $categoryData->id;
+                $outfit->outerware_id = $outerware_Id;
+                break;
+    
+            case 'accessory':
+                $accessory_Id = $categoryData->id;
+                $outfit->accessory_id = $accessory_Id;
+                break;
+    
+            case 'shoes':
+                $shoes_Id = $categoryData->id;
+                $outfit->shoes_id = $shoes_Id;
+                break;
+    
+            case 'overlap':
+                $overlap_Id = $categoryData->id;
+                $outfit->overlap_id = $overlap_Id;
+                break;
+    
+            // 他のカテゴリに応じた処理も追加
+    
+            default:
+                // デフォルトの処理
+                break;
+        }
+    
+        // 印象IDを取得
+        $impressionData = json_decode($request->input('post.impression_id'));
+        $impressionId = $impressionData->id;
+    
+        // 色IDを取得
+        $colorData = json_decode($request->input('post.color_id'));
+        $colorId = $request->input('post.color_id');
+    
+        // データモデルに前回のデータを取得
+        // $previous_data = Outfit::find($previous_data->id);
+    
+        if (!$previous_data) {
+            return redirect()->back()->with('error', '指定されたデータが見つかりませんでした');
+        }
+    
+        // dd($outfit->user_id);
+        // dd($outfit);
+        // フィールドごとにデータを比較し、変更があれば更新
+        // フィールドごとにデータを比較し、変更があれば更新
+        $previous_data->update([
+            'user_id' => $user->id,
+            'front_image_path' => $front_name != $previous_data->front_image_path ? $front_name : $previous_data->front_image_path,
+            'back_image_path' => $back_name != $previous_data->back_image_path ? $back_name : $previous_data->back_image_path,
+            'gender_id' => $genderId != $previous_data->gender_id ? $genderId : $previous_data->gender_id,
+            'season_id' => $seasonId != $previous_data->season_id ? $seasonId : $previous_data->season_id,
+            'style_id' => $styleId != $previous_data->style_id ? $styleId : $previous_data->style_id,
+            'part_id' => $partId != $previous_data->part_id ? $partId : $previous_data->part_id,
+            'length_id' => $lengthId != $previous_data->length_id ? $lengthId : $previous_data->length_id,
+            'size_id' => $sizeId != $previous_data->size_id ? $sizeId : $previous_data->size_id,
+            'tops_id' => $tops_Id !=$previous_data->tops_id ? $tops_Id : $previous_data->tops_id,
+            'botms_id' => $botms_Id !=$previous_data->botms_id ? $botms_Id : $previous_data->botms_id,
+            'dores_id' => $dores_Id !=$previous_data->dores_id ? $dores_Id : $previous_data->dores_id,
+            'outerware_id' => $outerware_Id !=$previous_data->outerware_id ? $outerware_Id : $previous_data->outerware_id,
+            'accessory_id' => $accessory_Id !=$previous_data->accessory_id ? $accessory_Id : $previous_data->accessory_id,
+            'shoes_id' => $shoes_Id !=$previous_data->shoes_id ? $shoes_Id : $previous_data->shoes_id,
+            'overlap_id' => $overlap_Id !=$previous_data->overlap_id ? $overlap_Id : $previous_data->overlap_id,
+            // 他の属性についても同様に比較と更新を行う
+            'impression_id' => $impressionId != $previous_data->impression_id ? $impressionId : $previous_data->impression_id,
+            'color_id' => $colorId != $previous_data->color_id ? $colorId : $previous_data->color_id,
+        ]);
+        
+        return redirect()->route('edit', ['post' => $previous_data->id])->with('success', 'データが更新されました');
+    }
+    
+    
+        
     
     
  

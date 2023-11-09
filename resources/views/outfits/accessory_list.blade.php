@@ -27,7 +27,7 @@
             <img src="{{ $accessory->back_image_path }}" alt="アクセサリーの写真が不足している可能性があります.">
             <br>
             <h2>系統</h2>
-            @switch($accessory->style_id)
+            @switch($accessory->accessory_id)
                 @case(1)
                     <p>ネックレス</p>
                     @break
@@ -49,6 +49,8 @@
                 @default
                     <p>スタイルなし</p>
             @endswitch
+            
+            <a href="{{ route('edit', ['post' => $accessory->id]) }}">編集</a>
             
             <br><br>
         @endforeach
