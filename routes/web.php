@@ -81,8 +81,13 @@ Route::controller(OutfitController::class)->middleware(['auth'])->group(function
     Route::get("/list/{post}/edit", 'edit')->name('edit');
     // 編集処理
     Route::put("/list/{post}",'update')->name('update');
+    // 削除機能
+    Route::delete("/list/{post}",'delete')->name('delete');
+    // コーデの削除機能
+    Route::delete("/list/code/{post}",'delete_code')->name('delete_code');
     
-    // Route::get("/list/{post}",'update')->name('update');
+    // 復活機能
+    Route::get('/restore/{post}','restoreRecord')->name('restoreRecord');
     
     
 });

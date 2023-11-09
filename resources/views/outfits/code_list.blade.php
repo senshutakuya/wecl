@@ -51,8 +51,22 @@
                 <img src="{{ $code->b_backimage }}" alt="コーデの写真が不足している可能性があります.">
                 <br>
                 
-                
                 <br><br>
+            
+            <form action="/list/code/{{ $code->id }}" id="form_{{ $code->id }}" method="post">
+                <!--posts/idに送信、idはform_idとするメソッドはpost-->
+                @csrf
+                <!--csrf対策-->
+                @method('DELETE')
+                <!--HTMLでDELETEはサポートされていないから-->
+                <button type="button" onclick="deletePost({{ $code->id }})">削除</button> 
+                <!--JavaScriptで処理を書くからsubmitじゃなくてbuttonにする-->
+                <!--onclickにはこのボタンがクリックされた場合の処理を書く今回だとidを格納している-->
+                <!--この格納したidはJavaScriptのdeletePostの引数に使われる。-->
+            </form>
+            
+                <br><br>
+                
             
             @endif
         @endforeach
@@ -62,6 +76,7 @@
         </div>
     
     </x-app-layout>
+    <script src="{{ asset('js/deletePost.js') }}"></script>
     </body>
 </html>
 
