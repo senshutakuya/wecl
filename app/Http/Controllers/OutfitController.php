@@ -926,18 +926,88 @@ class OutfitController extends Controller{
         // /にリダイレクト処理
     }
     
-    // 例: コントローラー内での復元の処理
+    // 削除されたデータ一覧
+    public function deletion_data()
+    {
+        return view('outfits.deletiton_data');
+    }
+    
+    // 削除された服データの一覧表示
+    public function deletion_list_data(Outfit $outfit)
+    {
+        $user = auth()->user();
+    
+        $deletion_data = $outfit->onlyTrashed()
+            ->where('user_id', $user->id)
+            ->orderBy('updated_at', 'desc')
+            ->paginate(5);
+    
+        // クエリの結果をデバッグしてダンプ
+        // dd($deletion_data);
+    
+        return view('outfits.deletion_list', ['deletion_list' => $deletion_data]);
+    }
+
+
+    
+     // 削除されたcodeデータの一覧表示
+    public function deletion_code_data(Starcode $code)
+    {
+        $user = auth()->user();
+        $deletion_data = $code->onlyTrashed()
+            ->where('user_id', $user->id)
+            ->orderBy('updated_at', 'desc')
+            ->paginate(5);
+            
+            
+        // dd($deletion_data);
+    
+        return view('outfits.deletion_code',['deletion_code' => $deletion_data]);
+    }
+    
+    
+    
+    // 例: 服の復元の処理
     public function restoreRecord($post , Outfit $outfit)
     {
+        
         // ソフトデリートされたレコードを復元
+        // dd($outfit::withTrashed()->find($post));
         $outfit::withTrashed()->find($post)->restore();
+    
+        return redirect('/list');
+    }
+    
+    
+    // 例: コーデの復元の処理
+    public function restore_code_Record($post , Starcode $code)
+    {
+        // ソフトデリートされたレコードを復元
+        $code::withTrashed()->find($post)->restore();
     
         return redirect('/list');
     }
     
         
     
+    // 服の物理削除
+    public function deletion_cloth($post , Outfit $outfit)
+    {
+        // dd($outfit::withTrashed()->find($post));
+        $outfit::withTrashed()->find($post)->forceDelete();  // 物理削除
+        
+        return redirect('/deletion_data');
+    }
     
+    
+    // コーデの物理削除
+    public function deletion_code($post , Starcode $code)
+    {
+        // dd($outfit::withTrashed()->find($post));
+        $code::withTrashed()->find($post)->forceDelete();  // 物理削除
+        
+        return redirect('/deletion_data');
+    }
  
     
 
