@@ -52,7 +52,7 @@
                 <br>
                 
                 <br><br>
-            
+            @endif
             <form action="/list/code/{{ $code->id }}" id="form_{{ $code->id }}" method="post">
                 <!--posts/idに送信、idはform_idとするメソッドはpost-->
                 @csrf
@@ -68,7 +68,7 @@
                 <br><br>
                 
             
-            @endif
+            
         @endforeach
         
         <div class="pagination">

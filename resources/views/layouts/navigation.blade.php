@@ -22,6 +22,9 @@
                     <x-nav-link :href="route('coordinate')" :active="request()->routeIs('coordinate')">
                         {{ __('coordinate') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('deletion_data')" :active="request()->routeIs('deletion_data')">
+                        {{ __('deletion_data') }}
+                    </x-nav-link>
                 </div>
             </div>
 

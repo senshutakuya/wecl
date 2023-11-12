@@ -17,6 +17,7 @@ class Outfit extends Model
         // 許可するカラムを指定
         'id',
         // 'name',
+        'user_id',
         // 説明
         'discription',
         // 画像(前)

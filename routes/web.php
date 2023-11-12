@@ -83,12 +83,28 @@ Route::controller(OutfitController::class)->middleware(['auth'])->group(function
     Route::put("/list/{post}",'update')->name('update');
     // 削除機能
     Route::delete("/list/{post}",'delete')->name('delete');
-    // コーデの削除機能
+    // コーデの論理削除機能
     Route::delete("/list/code/{post}",'delete_code')->name('delete_code');
+    // 削除データ一覧
+    Route::get("/deletion_data", 'deletion_data')->name('deletion_data');
     
-    // 復活機能
+    // 削除服一覧
+    Route::get("/deletion_list", 'deletion_list_data')->name('deletion_list_data');
+    
+    // 削除コーデ一覧
+    Route::get("/deletion_code", 'deletion_code_data')->name('deletion_code_data');
+    
+    // 服の物理削除機能
+    Route::delete("/deletion_data/{post}",'deletion_cloth')->name('delete_cloth');
+    
+    // コーデの物理削除機能
+    Route::delete("/deletion_data/code/{post}",'deletion_code')->name('delete_code');
+    
+    // 服の復活機能
     Route::get('/restore/{post}','restoreRecord')->name('restoreRecord');
     
+    // コーデの復活機能
+    Route::get('/restore_code_Record/{post}','restore_code_Record')->name('restore_code_Record');
     
 });
 
