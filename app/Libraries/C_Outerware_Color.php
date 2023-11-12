@@ -141,7 +141,7 @@ class C_Outerware_Color {
             } elseif ($this->black_color->isNotEmpty()) {
                 $cColor = $this->black_color;
                 $random_item = $this->getRandomColorIndex($this->black_color);
-                dd($random_item);
+                // dd($random_item);
                 // return [$random_item, $cColor];
             } elseif ($this->white_color->isNotEmpty()) {
                 $cColor = $this->white_color;
