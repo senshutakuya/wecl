@@ -54,7 +54,7 @@ class C_Outerware_Style {
     
     // ここで引数に入れられたスタイルIDが該当するボトムスを取得する処理を書く
     private function getOuterwareByStyle($styleId) {
-        return $this->outfit->where('part_id', 2)->where('style_id', $styleId)->where('user_id', $this->user->id)->get();
+        return $this->outfit->where('part_id', 3)->where('style_id', $styleId)->where('user_id', $this->user->id)->get();
     }
     
     private function getRandomStyleIndex($styleArray) {
@@ -90,6 +90,7 @@ class C_Outerware_Style {
             } elseif ($this->casual->isEmpty()) {
                 for ($i = 1; $i <= 10; $i++) {
                     $cStyle = $this->getOuterwareByStyle($i);
+                    $random_item = $this->getRandomStyleIndex($cStyle);
                     if ($cStyle->isNotEmpty()) {
                         $alertDifferent = "この系統はあいません";
                         break;

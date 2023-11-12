@@ -122,7 +122,7 @@ class OutfitController extends Controller{
         // 前面の元のファイル名を取得
         
         $front_name = Cloudinary::upload($request->file('front_upfile_camera')->getRealPath())->getSecurePath();
-        $back_name = Cloudinary::upload($request->file('front_upfile_camera')->getRealPath())->getSecurePath();
+        $back_name = Cloudinary::upload($request->file('back_upfile_camera')->getRealPath())->getSecurePath();
         // dd($image_url); 
         
         // $front_originalNameCamera = $request->file('front_upfile_camera')->getClientOriginalName();
