@@ -1,0 +1,46 @@
+#title {
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+    align-items: center
+}
+@media (max-width: 480px) {
+    
+    #navigation_layout {
+        width: auto;
+        text-align: center;
+    }
+    
+    .under_400px {
+        width: 300px;
+        overflow-x: auto;
+        margin: auto;
+        /*margin-right: 40px;*/
+        white-space: nowrap; /* 文字列が折り返されないようにする */
+    }
+    
+    .nav_link {
+        display: inline-block; /* 要素を横に並べる */
+        margin-right: 20px; /* リンクの間隔（必要に応じて調整） */
+    }
+}
+
+/* メディアクエリ: 400px以上の場合に .under_400px の width を無効にする */
+@media (min-width: 480px) {
+    .under_400px {
+        width: auto;
+        /*margin-right: 40px;*/
+        margin:auto;
+    }
+    #navclass{
+        text-align: center;
+        justify-content: center
+    }
+    .nav_link {
+        display: inline-block; /* 要素を横に並べる */
+         margin-right: 20px; /* リンクの間隔（必要に応じて調整） */
+    }
+}
+
+/* 追加の調整が必要であれば以下に追加 */
+/* 例えば、リンクのスタイルなど */
