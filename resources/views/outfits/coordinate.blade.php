@@ -41,6 +41,7 @@
             </a>
             
             <form action ="/coordinate_gen">
+                @csrf
                 <h2>地名を入力</h2>
                 <input type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" />
                 <button type="submit">位置情報を取得</button>
