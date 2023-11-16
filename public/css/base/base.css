@@ -1,0 +1,71 @@
+header{
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+#wrapper{
+    text-align: center;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    /*background-color: #D9D9D9;*/
+    height: auto;
+}
+
+.content_title{
+    font-weight: bold;
+    font-size: 1.3em;
+    
+}
+
+.image_form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;  /* 横方向の中央寄せ */
+}
+
+.select_image {
+    display: flex;  /* label内の要素もフレックスコンテナーにする */
+    flex-direction: column;  /* 子要素を縦方向に配置 */
+    align-items: center;  /* 縦方向の中央寄せ */
+}
+
+.input_file{
+    text-align: center;
+    align-items: center;  /* 縦方向の中央寄せ */
+    margin: 0 auto;
+    width: 70%;
+}
+
+
+
+.save_button {
+    width: 120px;
+    color: black; 
+    padding: 10px 20px; /* ボタンの余白を調整 */
+    border: none; /* ボーダーをなしに設定 */
+    border: solid 2px black;
+    border-radius: 5px; /* ボーダーの角を丸くする */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.save_button:hover {
+    background-color: #2980b9; /* ホバー時の色を設定 */
+}
+
+
+/* 820px以下の場合のスタイル */
+@media screen and (max-width: 820px) {
+    #wrapper {
+        width: 100%; /* フル幅に変更 */
+    }
+
+    .input_file {
+        width: 90%; /* 幅を変更 */
+    }
+
+    .save_button {
+        width: auto; /* フル幅に変更 */
+    }
+}

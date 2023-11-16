@@ -1,0 +1,13 @@
+.return_button{
+    width: 120px;
+    color: black; 
+    padding: 10px 20px; /* ボタンの余白を調整 */
+    border: none; /* ボーダーをなしに設定 */
+    border: solid 2px black;
+    border-radius: 5px; /* ボーダーの角を丸くする */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+.return_button:hover {
+    background-color: #2980b9; /* ホバー時の色を設定 */
+}
