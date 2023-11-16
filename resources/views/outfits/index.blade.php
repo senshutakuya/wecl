@@ -5,42 +5,38 @@
         <title>ホーム</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
     </head>
     <body>
         
         <x-app-layout>
         <div id="wrapper">
             
+            <div id="scroll_widget">
+                
+                <div id="weather_widget">
+                    <div id="weather_location"></div>
+                    <div id="weather_temperature"></div>
+                    <div id="weather_description"></div>
+                </div>
+                
+                <!--<div class="Arrow left"><</div>-->
+                <!--<div class="Arrow right">></div>-->
+            </div>
             
-            <div id="openweathermap-widget-11"></div>
-            <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-            <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '1850144',appid: '54000d99cbc9d1a4d126abc2b3f7c5a7',lang: 'ja' ,units: 'metric',containerid: 'openweathermap-widget-11',  });  
-            (function() {var script = document.createElement('script');
-            script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(script, s);  })();</script>
-            
-            検索機能
-            <form action ="/coordinate_gen">
-                @csrf
-                <h2>地名を入力</h2>
-                <input type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" />
-                <button type="submit">位置情報を取得</button>
-            </form>
+            <!--検索機能-->
+            <!--<form action ="/coordinate_gen">-->
+            <!--    @csrf-->
+            <!--    <h2>地名を入力</h2>-->
+            <!--    <input type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" />-->
+            <!--    <button type="submit">位置情報を取得</button>-->
+            <!--</form>-->
             
             <div id = "weather_comment">
+                <h2>こんにちは{{ Auth::user()->name }}さん </h2>
                 <div id="comment">
-                    <h2>こんにちはーーさん </h2>
-                    <p>
-                    今日はーー月－－日
-                    </p>
-                    <p>
-                     ただいまの天気はーー ただいまの温度はーー
-                    </p>
-                    <p>
-                    今日も一日張り切っていきましょう張り切っていきましょう
-                    </p>
+                    
+                    
                 </div>
             </div>
             
@@ -68,11 +64,14 @@
         
             </div>
         </div>
+        
+        
+
 
          </x-app-layout>
     
     
-    
+    <script src="{{ asset('js/home.js') }}"></script>
     </body>
 </html>
 

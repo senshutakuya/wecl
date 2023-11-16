@@ -1,0 +1,36 @@
+#cordinate_button{
+    width: 160px;
+    color: black; 
+    padding: 10px 20px; /* ボタンの余白を調整 */
+    border: none; /* ボーダーをなしに設定 */
+    border: solid 2px black;
+    border-radius: 5px; /* ボーダーの角を丸くする */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+#cordinate_button:hover {
+    background-color: #2980b9; /* ホバー時の色を設定 */
+}
+
+#input_place{
+    width: 160px;
+}
+
+#star_button{
+    width: 180px;
+    color: black; 
+    padding: 10px 20px; /* ボタンの余白を調整 */
+    border: none; /* ボーダーをなしに設定 */
+    border: solid 2px black;
+    border-radius: 5px; /* ボーダーの角を丸くする */
+    cursor: pointer; /* カーソルをポインターに変更 */
+}
+
+
+#star_button:hover {
+    background-color: #2980b9; /* ホバー時の色を設定 */
+}
+
+.alert-danger{
+    color: red;
+}
