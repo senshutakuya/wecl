@@ -1,8 +1,11 @@
+<link rel="stylesheet" href="{{ asset('css/profile/title.css') }}">
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
+        <div id="profile_title">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('プロフィール') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">

@@ -15,29 +15,60 @@
             <div id="scroll_widget">
                 
                 <div id="weather_widget">
-                    <div id="weather_location"></div>
-                    <div id="weather_temperature"></div>
-                    <div id="weather_description"></div>
+                    <div id="weather_location">
+                        <p>ただいまの天気</p>
+                    </div>
+                    <div id="weather_temperature">
+                        <div id="weather_temperature">{{ isset($mainTemperature) ? $mainTemperature . '℃' : '' }}</div>
+                    </div>
+                    <div id="weather_description">
+                        <div id="weather_description">{{ isset($weatherInfo) ? $weatherInfo : '' }}</div>
+                    </div>
                 </div>
                 
                 <!--<div class="Arrow left"><</div>-->
                 <!--<div class="Arrow right">></div>-->
             </div>
+            <p>
+            もし結果に違いがあれば位置情報のアクセスを拒否して都市名を検索してください
+            </p>
+            <p>
+            検索機能
+            </p>
+            <form action ="/home" method="post">
+                @csrf
+                <h2>地名を入力</h2>
+                @if(isset($errorMessage))
+
+                    <div class="alert-danger">
+                        <p>{{ $errorMessage }}</p>
+                    </div>
+                @endif
+                <input id="input_place" type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" placeholder="区か都か県を入力" pattern=".*(区|都|県)$" title="区か都か県で終わる必要があります">
+                <button class="save_button" type="submit">位置情報を取得</button>
+            </form>
             
-            <!--検索機能-->
-            <!--<form action ="/coordinate_gen">-->
-            <!--    @csrf-->
-            <!--    <h2>地名を入力</h2>-->
-            <!--    <input type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" />-->
-            <!--    <button type="submit">位置情報を取得</button>-->
-            <!--</form>-->
-            
-            <div id = "weather_comment">
-                <h2>こんにちは{{ Auth::user()->name }}さん </h2>
-                <div id="comment">
-                    
-                    
+            <div id=weather_comment>
+                <div id = "weather_image">
+                    <div id="weather_info" style="display: none;">{{ isset($weatherInfo) ? $weatherInfo : '' }}</div>
                 </div>
+                <div class="content">    
+                    <h2>こんにちは{{ Auth::user()->name }}さん </h2>
+                    <div id="today"></div>
+                    <div id="comment">
+                        <!--今日は2023年11月17日金曜日-->
+                    <p>ただいまの天気は</p>
+                    <div id="weather_description">{{ isset($weatherInfo) ? $weatherInfo : '' }}</div>
+                    <p>ただいまの温度は</p>
+                    
+                    <div id="weather_temperature">{{ isset($mainTemperature) ? $mainTemperature . '℃' : '' }}</div>
+                    <p>今日も一日張り切っていきましょう</p>
+                        
+                    </div>
+                    
+
+                </div>
+                
             </div>
             
             <div  id="faq-container">
@@ -69,8 +100,9 @@
 
 
          </x-app-layout>
-    
-    
+    <script src="{{ asset('js/today.js') }}"></script>
+    <script src="{{ asset('js/weatherImage.js') }}"></script>
+    <script src="{{ asset('js/cordinate.js') }}"></script>
     <script src="{{ asset('js/home.js') }}"></script>
     </body>
 </html>

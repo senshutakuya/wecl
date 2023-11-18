@@ -51,10 +51,46 @@ class OutfitController extends Controller{
     }
     
     
+    public function search_city(Outfit $outfit, Request $request){
+        try {
+            $apiKey = '54000d99cbc9d1a4d126abc2b3f7c5a7';
+            // dd($apiKey);
+            $city = $request->input('city');
+            $response = Http::get("http://api.openweathermap.org/data/2.5/weather?q={$city}&appid={$apiKey}&lang=ja&units=metric");
     
-    public function home(Outfit $outfit)
+            if ($response->successful()) {
+                $weatherData = $response->json();
+    
+                $mainTemperature = $weatherData['main']['temp'];
+                // $minTemperature = $weatherData['main']['temp_min'] * 100;
+                // $maxTemperature = $weatherData['main']['temp_max'];
+                $weatherInfo = $weatherData['weather'][0]['description'];
+                
+                // dd(intval(round($mainTemperature)),$weatherInfo);
+    
+                return redirect('/home')->with(['outfits' => $outfit->get(), 'mainTemperature' => intval(round($mainTemperature)) ,'weatherInfo' => $weatherInfo]);
+            } else {
+                // APIからのレスポンスが失敗した場合の処理
+                return redirect('/home')->with(['errorMessage' => '検索した地名が見つかりませんでした。', 'outfits' => $outfit->get()]);
+            }
+        } catch (\Exception $e) {
+            // 例外が発生した場合の処理。例外メッセージをログに記録するなど、適切に処理してください。
+            return redirect('/home')->with(['errorMessage' => '天気情報を取得できませんでした。', 'outfits' => $outfit->get()]);
+        }
+    }
+
+    public function home(Outfit $outfit , Request $request)
     {
-        return view('outfits.index', ['outfits' => $outfit->get()]);
+    
+            
+            
+
+        // セッションからデータを取り出す
+        $mainTemperature = session('mainTemperature', null);
+        $weatherInfo = session('weatherInfo', null);
+        $errorMessage = session('errorMessage', null);
+    
+        return view('outfits.index', ['outfits' => $outfit->get(), 'mainTemperature' => $mainTemperature, 'weatherInfo' => $weatherInfo, 'errorMessage' => $errorMessage]);
         // outfitsフォルダのindex.blade.phpを表示
        //blade内で使う変数'outfits'と設定。'outfits'の中身にgetを使い、インスタンス化した$outfitを代入。
     }

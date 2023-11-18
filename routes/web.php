@@ -47,6 +47,8 @@ Route::controller(OutfitController::class)->middleware(['auth'])->group(function
     Route::get('/upload', 'upload')->name('upload');
     // home画面
     Route::get('/home', 'home')->name('home');
+    // 都市検索した際のホーム画面
+    Route::post('/home', 'search_city')->name('search_city');
     // 服の追加処理
     Route::post('/add', 'add')->name('add');
     // 服の一覧
