@@ -47,6 +47,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        
+        // 関連する行を削除
+        $user->clothings()->delete();
 
         Auth::logout();
 
