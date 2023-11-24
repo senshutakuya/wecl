@@ -2,6 +2,8 @@ function getWeatherImageURL(description) {
     switch (description) {
         case '晴れ':
             return 'https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2/tenki_mark01_hare.png';
+        case '晴天':
+            return 'https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2/tenki_mark01_hare.png';
         case '雲':
             return 'https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E3%83%9B%E3%83%BC%E3%83%A0%E7%94%BB%E9%9D%A2/tenki_mark05_kumori.png';
         case '雨':

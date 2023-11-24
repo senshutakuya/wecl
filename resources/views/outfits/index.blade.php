@@ -44,7 +44,7 @@
                         <p>{{ $errorMessage }}</p>
                     </div>
                 @endif
-                <input id="input_place" type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" placeholder="区か都か県を入力" pattern=".*(区|都|県)$" title="区か都か県で終わる必要があります">
+                <input id="input_place" type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" placeholder="区か都か県を入力"  title="区か都か県で終わる必要があります">
                 <button class="save_button" type="submit">位置情報を取得</button>
             </form>
             
@@ -75,7 +75,7 @@
                 <h1>よくある質問</h1>
                 
                 <h2>Q:服装の登録はどうするの</h2>
-                <p>A,下の＋アイコンから登録してください</p>
+                <p>A,上のuploadから登録してください</p>
                 
                 <h2>Q:選ぶ服が無いと言われた</h2>
                 <p>A,トップスは半袖、七分丈、長袖を一つずつ、ボトムスとアウターウェアも一つずつ登録してください登録してください</p>
@@ -87,7 +87,7 @@
                 <p>A,リストから編集をお願いします</p>
                 
                 <h2>Q:削除を取り消したい</h2>
-                <p>A,下のゴミ箱ボタンから取り消せます</p>
+                <p>A,上のdelition_dataから取り消せます</p>
                 
                 <h2>Q:削除したデータが無いが無い</h2>
                 <p>A,削除後3日経つとデータは消えます<br>

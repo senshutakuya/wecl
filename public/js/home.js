@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             
             .then(data => {
-                console.log("緯度:", latitude);
-                console.log("経度:", longitude);
-                console.log("地名:", data.name);
-                console.log("天気データ:", data);
+                // console.log("緯度:", latitude);
+                // console.log("経度:", longitude);
+                // console.log("地名:", data.name);
+                // console.log("天気データ:", data);
 
                 // 天気情報を表示
                 // console.log(latitude,longitude,data.name,data);
