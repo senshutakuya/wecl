@@ -73,6 +73,7 @@ class C_Outerware_Style {
     private function baseStyleMatch($selectedBotmsStyle, $confirmationBotmsStyle, $propertyName) {
         $cStyle = null;
         $alertDifferent = "";
+        $random_item = null;
         
         
     
@@ -92,7 +93,7 @@ class C_Outerware_Style {
                     $cStyle = $this->getOuterwareByStyle($i);
                     $random_item = $this->getRandomStyleIndex($cStyle);
                     if ($cStyle->isNotEmpty()) {
-                        $alertDifferent = "この系統はあいません";
+                        $alertDifferent = "おすすめはしません";
                         break;
                     }
                     
@@ -108,9 +109,14 @@ class C_Outerware_Style {
     
         // $random_item = $this->getRandomStyleIndex($cStyle);
         
-        $oStyleResult = $cStyle[$random_item];
+        if(!is_null($random_item)){
+            $oStyleResult = $cStyle[$random_item];
     
-        return [$oStyleResult, $alertDifferent];
+            return [$oStyleResult, $alertDifferent];
+        }else{
+            return null;
+        }
+        
     }
     
    

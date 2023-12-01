@@ -73,12 +73,13 @@ class C_Botms_Style {
     private function baseStyleMatch($selectedTopsStyle, $confirmationTopsStyle, $propertyName) {
         $cStyle = null;
         $alertDifferent = "";
+        $random_item = null; 
         
         
     
         if ($selectedTopsStyle === $confirmationTopsStyle) {
             if ($propertyName->isNotEmpty()) {
-                $cStyle = $proertyName;
+                $cStyle = $propertyName;
                 $random_item = $this->getRandomStyleIndex($propertyName);
             } elseif ($this->natural->isNotEmpty()) {
                 $cStyle = $this->natural;
@@ -90,7 +91,7 @@ class C_Botms_Style {
                 for ($i = 1; $i <= 10; $i++) {
                     $cStyle = $this->getBottomsByStyle($i);
                     if ($cStyle->isNotEmpty()) {
-                        $alertDifferent = "この系統はあいません";
+                        $alertDifferent = "おすすめはしません";
                         $random_item = $this->getRandomStyleIndex($cStyle);
                         break;
                     }
@@ -108,10 +109,16 @@ class C_Botms_Style {
         // $randomItem = $this->getRandomStyleIndex($cStyle);
         // dd($random_item);
         
-        $bStyleResult = $cStyle[$random_item];
-        // dd($bStyleResult);
+        
+        if(!is_null($random_item)){
+            $bStyleResult = $cStyle[$random_item];
+            // dd($bStyleResult);
     
-        return [$bStyleResult, $alertDifferent];
+            return [$bStyleResult, $alertDifferent];
+        }else{
+            return null;
+        }
+        
     }
     
     

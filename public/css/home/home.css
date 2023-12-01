@@ -166,6 +166,11 @@
         height: auto;
     }
     
+    #faq-container {
+        width: 100%;
+        height: auto
+    }
+    
     #scroll_widget {
         overflow-x: auto; /* 横スクロールを有効にする */
         overflow-y: hidden; /* 縦スクロールを無効にする */

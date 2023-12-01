@@ -28,15 +28,22 @@
                     <!-- カメラからの画像キャプチャ用の<input>要素 -->
                     <!--表面-->
                     <!--前面-->
+       
+                    @if(session('error_message'))
+                        <p>{{ session('error_message') }}</p>
+                    @endif
+                    @if(session('message'))
+                        <p>{{ session('message') }}</p>
+                    @endif
                     <div class ="image_form">
                         <label class="select_image" for="frontCameraCapture">
                             <h1 class="textalign center">前面を選択</h1>
-                            <input class="input_file" type="file" name="front_upfile_camera" class="cameraCapture" accept="image/*" capture="camera" required>
+                            <input class="input_file" type="file" name="front_upfile_camera" class="cameraCapture" accept="image/*"  required>
                         </label>
                         <!--裏面-->
                         <label class="select_image" for="backCameraCapture">
                             <h1 class="textalign center">裏面を選択</h1>
-                            <input class="input_file" type="file" name="back_upfile_camera" class="cameraCapture" accept="image/*" capture="camera" required>
+                            <input class="input_file" type="file" name="back_upfile_camera" class="cameraCapture" accept="image/*"  required>
                         </label>
                     </div>
     

@@ -33,16 +33,22 @@
                     <!-- カメラからの画像キャプチャ用の<input>要素 -->
                     <!--表面-->
                     <!--前面-->
+                    @if(session('error_message'))
+                        <p>{{ session('error_message') }}</p>
+                    @endif
+                    @if(session('success'))
+                        <p>{{ session('success') }}</p>
+                    @endif
                     <label for="frontCameraCapture">
                         <h1 class="textalign center">新しい前面を選択</h1>
-                        <input type="file" name="front_upfile_camera" class="cameraCapture" accept="image/*" capture="camera" />
+                        <input type="file" name="front_upfile_camera" class="cameraCapture" accept="image/*"  />
                         <img src='{{ $outfit->front_image_path }}' alt='前面画像'>
                         <input type="hidden" name= "previous_front" value="{{ $outfit->front_image_path }}"/>
                     </label>
                     <!--裏面-->
                     <label for="backCameraCapture">
                         <h1 class="textalign center">新しい裏面を選択</h1>
-                        <input type="file" name="back_upfile_camera" class="cameraCapture" accept="image/*" capture="camera" />
+                        <input type="file" name="back_upfile_camera" class="cameraCapture" accept="image/*"  />
                         <img src='{{ $outfit->back_image_path }}' alt='後ろ面画像'>
                         <input type="hidden" name= "previous_back" value="{{ $outfit->back_image_path }}"/>
                     </label>

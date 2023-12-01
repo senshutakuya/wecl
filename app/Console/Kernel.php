@@ -28,7 +28,8 @@ class Kernel extends ConsoleKernel
             Starcode::onlyTrashed()
                 ->where('deleted_at', '<=', now()->subDays(3))
                 ->forceDelete();
-        })->daily()->timezone('Asia/Tokyo');
+        })->dailyAt('12:00')->timezone('UTC');
+        // herokuでam　12:00で設定してる
     }
 
 

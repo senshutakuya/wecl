@@ -51,10 +51,12 @@
     
                     
                     
-                    
+
                     @if ($botms_data)
                         @foreach ($botms_data as $as_botms_data)
                             @if ($as_botms_data && isset($as_botms_data->front_image_path))
+                                
+                                
                                 <img src="{{ $as_botms_data->front_image_path }}" alt="ボトムスの写真が不足している可能性があります.">
                             @endif
                         @endforeach
@@ -64,8 +66,15 @@
                     
                     
                     @if($botms_data != null) 
+                    
                         @if(count($botms_data) == 4)
                             <h2>どちらかお選びください</h2>
+                            @if($botms_data[1] != null)
+                                <p>1は{{$botms_data[1]}}</p>
+                            @endif
+                            @if($botms_data[3] != null)
+                                <p>2は{{$botms_data[3]}}</p>
+                            @endif
                             <select name="select_botoms">
                                 <option value="one_botms">1</option>
                                 <option value="two_botms">2</option>
@@ -79,6 +88,7 @@
                             <br>
                         @else
                             <h2>１つなので選ばなくて大丈夫です<h2>
+                            <p>{{$botms_data[1]}}</p>
                             <input type="hidden" name="select_botms" value="one_botms">
                             <input type="hidden" name="one_botms_id" value="{{ $botms_data[0]->id }}">
                             <input type="hidden" name="one_botms_front" value="{{ $botms_data[0]->front_image_path }}">
@@ -109,6 +119,12 @@
                     @else
                         @if(count($outerware_data) == 4)
                             <h2>どちらかお選びください</h2>
+                            @if($outerware_data[1] != null)
+                                <p>1は{{$outerware_data[1]}}</p>
+                            @endif
+                            @if($outerware_data[3] != null)
+                                <p>2は{{$outerware_data[3]}}</p>
+                            @endif
                             <select name="select_outerware">
                                 <option value="one_outerware">1</option>
                                 <option value="two_outerware">2</option>
@@ -122,6 +138,7 @@
                             <br>
                         @else
                             <h2>１つなので選ばなくて大丈夫です<h2>
+                                <p>{{$outerware_data[1]}}</p>
                                 <input type="hidden" name="select_outerware" value="one_outerware">
                                 <input type="hidden" name="one_outerware_id" value="{{ $outerware_data[0]->id }}">
                                 <input type="hidden" name="one_outerware_front" value="{{ $outerware_data[0]->front_image_path }}">

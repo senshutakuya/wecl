@@ -131,6 +131,7 @@ class C_Outerware_Color {
     private function baseColorMatch($selectedBotmsColor, $confirmationBotmsColor, $propertyName) {
         $cColor = null;
         $alertDifferent = "";
+        $random_item = null;
     
         if ($selectedBotmsColor === $confirmationBotmsColor) {
             if ($propertyName->isNotEmpty()) {
@@ -155,7 +156,7 @@ class C_Outerware_Color {
                     // dd($this->getRandomColorIndex($alternativeColor));
                     $random_item = $this->getRandomColorIndex($cColor);
                     if ($cColor->isNotEmpty()) {
-                        $alertDifferent = "この色はあいません";
+                        $alertDifferent = "おすすめはしません";
                         // dd($random_item);
                         // return [$random_item, $alternativeColor];
                         break;
@@ -175,9 +176,13 @@ class C_Outerware_Color {
     }
         // ここで dd を配置
         // dd($random_item);
-        $oColorResult = $cColor[$random_item];
+        if(!is_null($random_item)){
+            $oColorResult = $cColor[$random_item];
     
-        return [$oColorResult, $alertDifferent];
+            return [$oColorResult, $alertDifferent];
+        }else{
+            return null;
+        }
     }
     
     

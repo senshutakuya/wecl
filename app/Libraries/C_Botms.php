@@ -71,24 +71,28 @@ class C_Botms
         if(!is_null($colorResult) && !is_null($styleResult) && $colorResult[0]->id === $styleResult[0]->id){
             // オススメとしてボトムスを１つ表示する
             $recommendedBottoms = $this->selectRecommendedBottoms($colorResult, $styleResult);
+            // dd($recommendedBottoms);
             return $recommendedBottoms;
         }
         // もしcolorとstyleがどちらもあるが、どちらも違う場合
         elseif(!is_null($colorResult) && !is_null($styleResult) && $colorResult[0]->id !== $styleResult[0]->id){
             // for文で2つの異なるボトムスを表示する
             $differentBottoms = $this->selectDifferentBottoms($colorResult, $styleResult);
+            // dd($differentBottoms);
             return $differentBottoms;
         }
         // もしどちらかひとつなら
         elseif(!is_null($colorResult) && is_null($styleResult)){
             // カラーに合ったボトムスを表示
             $colorMatchedBottoms = $this->selectBottomsByColor($colorResult);
+            // dd($colorMatchedBottoms);
             return $colorMatchedBottoms;
         }
         // もしどちらかひとつなら
         elseif(is_null($colorResult) && !is_null($styleResult)){
             // スタイルに合ったボトムスを表示
             $styleMatchedBottoms = $this->selectBottomsByStyle($styleResult);
+            // dd($styleMatchedBottoms);
             return $styleMatchedBottoms;
         } else {
             return null;

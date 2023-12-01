@@ -131,6 +131,7 @@ class C_Botms_Color {
     private function baseColorMatch($selectedTopsColor, $confirmationTopsColor, $propertyName) {
         $cColor = null;
         $alertDifferent = "";
+        $random_item = null;
 
     
         if ($selectedTopsColor === $confirmationTopsColor) {
@@ -148,7 +149,7 @@ class C_Botms_Color {
                     $cColor = $this->getBottomsByColor($i);
                     $random_item = $this->getRandomColorIndex($cColor);
                     if ($cColor->isNotEmpty()) { // ここも $alternativeStyle に変更
-                        $alertDifferent = "この色はあいません";
+                        $alertDifferent = "おすすめはしません";
                         break;
                     }
                     
@@ -163,10 +164,15 @@ class C_Botms_Color {
     
         // $randomItem = $this->getRandomColorIndex($cColor);
     
+        if(!is_null($random_item)){
+            $bColorResult = $cColor[$random_item];
+            return [$bColorResult, $alertDifferent];
+        }else{
+            return null;
+        }
         
-        $bColorResult = $cColor[$random_item];
     
-        return [$bColorResult, $alertDifferent];
+        
     }
     
     

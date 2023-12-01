@@ -44,7 +44,7 @@
                     <img src="https://wecl-bucket.s3.ap-northeast-1.amazonaws.com/sozai/%E6%9C%8D%E4%B8%80%E8%A6%A7%E7%94%BB%E9%9D%A2/icons8-%E3%82%B8%E3%83%A3%E3%82%B1%E3%83%83%E3%83%88-50.png" alt="トップス">
                 </a>
                 
-                <form action="/coordinate_gen" onsubmit="return validateForm()">
+                <form action="/coordinate_gen" >
                     <!-- 他のフォーム要素 -->
                     <h2>地名を入力</h2>
                     @if(isset($errorMessage))
@@ -52,7 +52,7 @@
                             <alert>{{ $errorMessage }}</alert>
                         </div>
                     @endif
-                    <input id="input_place" type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" placeholder="区か都か県を入力" pattern=".*(区|都|県)$" title="区か都か県で終わる必要があります">
+                    <input id="input_place" type="text" id="city" name="city" required minlength="1" maxlength="15" size="10" placeholder="区か都か県を入力"  title="区か都か県で終わる必要があります">
                     
                     <button id="cordinate_button" type="submit">位置情報を取得</button>
                 </form>
@@ -62,6 +62,6 @@
             </div>
         </div>
     </x-app-layout>
-    <script src="{{ asset('js/cordinate.js') }}"></script>
+
 </body>
 </html>
